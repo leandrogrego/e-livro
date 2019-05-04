@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html 
+xmlns:th="http://www.thymeleaf.org"
+layout:decorate="~{layout}">
+<head>
+<title>Spring-Boot Básico</title>
+<meta charset="UTF-8" />
+</head>
+<body>
+
+	<section class="layout-content" layout:fragment="corpo">
+
+	 <!-- Breadcrumb-->
+      <div class="breadcrumb-holder">
+        <div class="container-fluid">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+            <li class="breadcrumb-item active">Cadastro Imóvel</li>
+          </ul>
+        </div>
+      </div>
+
+		<div class="container">
+			<form class="container" method="post" th:object="${imovel}"
+					th:action="@{/imovel/save}">
+				
+				<!--Input responsável em guardar o id-->
+				<input id="id" name="id" type="hidden" th:field="*{id}" th:value="*{id}">
+				
+				<!-- div reponsável em mostrar os erros -->
+				<div class="form-group row">
+					<div class="alert alert-danger alert-dismissible fade show"
+						role="alert" th:if="${#fields.hasAnyErrors()}">
+
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+
+						<div th:each="detailedError : ${#fields.detailedErrors()}">
+							<strong th:text="${detailedError.message}"> </strong>
+						</div>
+					</div>
+				</div>
+						
+				<div class="card">
+					<h5 class="card-header">Dados da Localização</h5>
+					<div class="card-body">
+						<div class="row">
+							<div class="form-group col-6">
+								<h6>Setor</h6>
+								<input type="text" class="form-control" th:field="*{setor}" placeholder="Setor"> 
+							</div>
+							<div class="form-group col-6">
+								<h6>Quadra</h6>
+								<input type="text" class="form-control" th:field="*{quadra}" placeholder="Quadra">
+							</div>	
+						</div>
+					</div>
+				</div>
+				
+				<div class="card">
+					<h5 class="card-header">Novo Zoneamento</h5>
+					<div class="card-body">
+						<div class="row">
+							<div class="form-group col-6">
+								<h6>Setor</h6>
+								<input type="text" class="form-control" th:field="*{novoSetor}" placeholder="Setor"> 
+							</div>
+							<div class="form-group col-6">
+								<h6>Quadra</h6>
+								<input type="text" class="form-control" th:field="*{novaQuadra}" placeholder="Quadra">
+							</div>	
+						</div>
+					</div>
+				</div>
+				
+				<div class="card">
+					<h6 class="card-header">Distribuição de Cômodos</h6>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-6">
+								<h6>Quartos</h6>
+								<input type="text" class="form-control mb-3" th:field="*{qtdQuartos}"
+									placeholder="Quartos">
+								<h6>Banheiros</h6>	 
+								<input type="text" class="form-control mb-3" th:field="*{qtdBanheiros}" placeholder="Banheiros">
+								<h6>Suites</h6>
+								<input type="text" class="form-control mb-3" th:field="*{qtdSuites}"
+									placeholder="Suites">
+							</div>
+							<div class="col-6">
+								<h6>Garagem</h6>
+								<input type="text" class="form-control mb-3" th:field="*{qtdGaragem}"
+									placeholder="Garagem"> 
+								<h6>Varanda</h6>
+								<input type="text" th:field="*{qtdVaranda}"
+									class="form-control mb-3" value="" placeholder="Varanda">
+								<h6>Área de Serviço</h6>
+								<input type="text" class="form-control mb-3" th:field="*{qtdAreaServico}"
+									placeholder="Área de Serviços">
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="card">
+					<h6 class="card-header">Boletim Comercial</h6>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-6">
+								<h6>Regime</h6>
+								<select th:field="*{regime.id}" id="inputRegime"  class="form-control">
+								<option value="0">Selecione</option>
+								<option th:each="regime : ${regimes}" th:value="${regime.id}"
+									th:text="${regime.descricao}"></option>
+								</select>	
+							</div>
+							<div class="col-6">
+								<h6>Atividade</h6>
+								
+								<select th:field="${imovel.atividade.id}" id="inputAtividade1"  class="form-control">
+								<option value="0">Selecione</option>
+								<option th:each="at : ${atividades}" th:value="${at.id}"
+									th:text="${at.nome}"></option>
+								</select>	
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-6 mt-2">
+								<h6>Pavimentação</h6>
+								<select th:field="${imovel.pavimentacao.id}" id="inputPavimentacao"  class="form-control">
+								<option value="0">Selecione</option>
+								<option th:each="pavimentacao : ${pavimentacoes}" th:value="${pavimentacao.id}"
+									th:text="${pavimentacao.nome}">
+								</option>
+								</select>	
+							</div>
+							<div class="col-6 p-4">
+								<div class="container">
+									<input type="checkbox" id="check_alvara" class="form-check-input" th:field="*{alvara}">
+									<label for="check_alvara" class="form-check-label">Alvará</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+				<div class="card">
+					<h6 class="card-header">Informações do Imóvel</h6>
+					<div class="card-body">
+						<div class="row">
+							<div class="form-group col-6">
+								<h6>Tipo de Imovel</h6>
+								<select th:field="*{tipoImovel.id}" id="inputTipoImovel"  class="form-control">
+									<option value="">Selecione</option>
+									<option th:each="tipoImovel : ${tipoImoveis}" th:value="${tipoImovel.id}"
+									th:text="${ tipoImovel.descricao}"></option>
+								</select>
+							</div>
+							<div class="form-group col-6">
+								<h6>Uso do Solo</h6>
+								<select th:field="*{usoSolo.id}" id="inputUsoSolo"  class="form-control">
+									<option value="">Selecione</option>
+									<option th:each="uso : ${usoSolos}" th:value="${uso.id}"
+									th:text="${ uso.nome}"></option>
+								</select>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-group col-6">
+								<h6>Situação do Imóvel</h6>
+								<select th:field="*{situacaoImovel.id}" id="inputSituacaoImovel"  class="form-control">
+									<option value="">Selecione</option>
+									<option th:each="situacaoImovel : ${situacaoImoveis}" th:value="${situacaoImovel.id}"
+									th:text="${ situacaoImovel.descricao}"></option>
+								</select>
+							</div>
+							<div class="form-group col-6">
+								<h6>Espécie</h6>
+								<select th:field="*{especie.id}" id="inputEspecie"  class="form-control">
+									<option value="">Selecione</option>
+									<option th:each="especie : ${especies}" th:value="${especie.id}"
+									th:text="${ especie.descricao}"></option>
+								</select>
+							</div>
+						</div>
+
+
+						<div class="row">
+							<div class="form-group col-6">
+								<h6>Patrimônio do Terreno</h6>
+								<select th:field="*{patrimonioTerreno.id}" id="inputPatrimonioTerreno"  class="form-control">
+									<option value="">Selecione</option>
+									<option th:each="patrimonioTerreno : ${patrimonioTerrenos}" th:value="${patrimonioTerreno.id}"
+									th:text="${ patrimonioTerreno.descricao}"></option>
+								</select>
+							</div>
+							<div class="form-group col-6">
+								<h6>Posição do Imóvel</h6>
+								<select th:field="*{posicaoImovel.id}" id="inputPosicaoImovel"  class="form-control">
+									<option value="">Selecione</option>
+									<option th:each="posicaoImovel : ${posicaoImoveis}" th:value="${posicaoImovel.id}"
+									th:text="${ posicaoImovel.descricao}"></option>
+								</select>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-group col-6">
+								<h6>Tributo/Isenção</h6>
+								<select th:field="*{tributos.id}" id="inputTributos"  class="form-control">
+									<option value="">Selecione</option>
+									<option th:each="tributo : ${tributos}" th:value="${tributo.id}"
+									th:text="${ tributo.descricao}"></option>
+								</select>
+							</div>
+							<div class="form-group col-6">
+								<h6>Elevação</h6>
+								<select th:field="*{elevacao.id}" id="inputElevacao"  class="form-control">
+									<option value="">Selecione</option>
+									<option th:each="elevacao : ${elevacoes}" th:value="${elevacao.id}"
+									th:text="${ elevacao.descricao}"></option>
+								</select>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-group col-6">
+								<h6>Piso</h6>
+								<select th:field="*{piso.id}" id="inputPiso"  class="form-control">
+									<option value="">Selecione</option>
+									<option th:each="piso : ${pisos}" th:value="${piso.id}"
+									th:text="${ piso.descricao}"></option>
+								</select>
+							</div>
+							<div class="form-group col-6">
+								<h6>Coberta</h6>
+								<select th:field="*{coberta}" id="inputCoberta"  class="form-control">
+									<option value="">Selecione</option>
+									<option th:each="coberta : ${cobertas}" th:value="${coberta.id}"
+									th:text="${ coberta.descricao}"></option>
+								</select>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-group col-6">
+								<h6>Padrão</h6>
+								<select th:field="*{padrao.id}" id="inputPadrao"  class="form-control">
+									<option value="">Selecione</option>
+									<option th:each="padrao : ${padroes}" th:value="${padrao.id}"
+									th:text="${ padrao.descricao}"></option>
+								</select>
+							</div>
+							<div class="form-group col-6">
+								<h6>Revestimento da Parede</h6>
+								<select th:field="*{revestimentoParede.id}" id="inputRevestimento"  class="form-control">
+									<option value="">Selecione</option>
+									<option th:each="revestimento : ${revestimentoParedes}" th:value="${revestimento.id}"
+									th:text="${revestimento.descricao}"></option>
+								</select>
+							</div>
+						</div>
+
+
+						<div class="row">
+							<div class="form-group col-6">
+								<h6>Patrimonio da Construção</h6>
+								<select th:field="*{patrimonnioConstrucao.id}" id="inputPatrimonioConst"  class="form-control">
+									<option value="">Selecione</option>
+									<option th:each="pa : ${patrimonioConstrucoes}" th:value="${pa.id}"
+									th:text="${pa.descricao}"></option>
+								</select>
+							</div>
+							<div class="form-group col-6">
+								<h6>Estado de Conservação</h6>
+								<select th:field="*{estadoConservacao.id}" id="inputEstadoConservacao"  class="form-control">
+									<option value="">Selecione</option>
+									<option th:each="ec : ${estadoConservacoes}" th:value="${ec.id}"
+									th:text="${ec.descricao}"></option>
+								</select>
+							</div>
+						</div>
+
+
+						<div class="row">
+							<div class="form-group col-6">
+								<h6>Técnica Construtiva</h6>
+								<select th:field="*{tecnicaConstrutiva.id}" id="inputTecnicaConstrutiva"  class="form-control">
+									<option value="">Selecione</option>
+									<option th:each="tc : ${tecnicaConstrutivas}" th:value="${tc.id}"
+									th:text="${tc.descricao}"></option>
+								</select>
+							</div>
+							<div class="form-group col-6">
+								<h6>Pedologia</h6>
+								<select th:field="*{pedologia.id}" id="inputPedologia"  class="form-control">
+									<option value="">Selecione</option>
+									<option th:each="pedologia : ${pedologias}" th:value="${pedologia.id}"
+									th:text="${pedologia.descricao}"></option>
+								</select>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-group col-6">
+								<h6>Topografia</h6>
+								<select th:field="*{topografia.id}" id="inputTopografia"  class="form-control">
+									<option value="">Selecione</option>
+									<option th:each="topografia : ${topografias}" th:value="${topografia.id}"
+									th:text="${topografia.descricao}"></option>
+								</select>
+							</div>
+							<div class="form-group col-6">
+								<h6>Edificação do Entorno</h6>
+								<select th:field="${imovel.edificacaoEntorno.id}" id="inputEdificacaoEntorno"  class="form-control">
+									<option value="">Selecione</option>
+									<option th:each="edificacaoEntorno : ${edificacaoEntornos}" th:value="${edificacaoEntorno.id}"
+									th:text="${edificacaoEntorno.descricao}"></option>
+								</select>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-group col-12">
+								<h6>Padrão das Edificações</h6>
+								<select th:field="*{padraoEdificacao.id}" id="inputPadraoEdificacao"  class="form-control">
+									<option value="">Selecione</option>
+									<option th:each="padraoEdificacao : ${padraoEdificacao}" th:value="${padraoEdificacao.id}"
+									th:text="${padraoEdificacao.descricao}"></option>
+								</select>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+
+				<div class="card">
+					<h6 class="card-header">Serviços Urbanos</h6>
+					<div class="card-body">
+						<div class="row">
+							<div class="form-check col-2">
+								<input type="checkbox" class="form-check-input" th:field="*{agua}"
+									id="ch_agua"> <label for="ch_agua"
+									class="form-check-label">Água</label>
+							</div>
+
+							<div class="form-check col-2">
+								<input type="checkbox" class="form-check-input" th:field="*{iluminacao}"
+									id="ch_iluminacao"> <label for="ch_iluminacao"
+									class="form-check-label">Iluminação</label>
+							</div>
+
+							<div class="form-check col-2">
+								<input type="checkbox" class="form-check-input" th:field="*{arborizacao}"
+									id="ch_arborizacao"> <label for="ch_arborizacao"
+									class="form-check-label">Arborização</label>
+							</div>
+
+							<div class="form-check col-2">
+								<input type="checkbox" class="form-check-input" th:field="*{asfalto}"
+									id="ch_asfalto"> <label for="ch_asfalto"
+									class="form-check-label">Asfalto</label>
+							</div>
+
+							<div class="form-check col-2">
+								<input type="checkbox" class="form-check-input" th:field="*{coletaLixo}"
+									id="ch_coleta_lixo"> <label for="ch_coleta_lixo"
+									class="form-check-label">Coleta de Lixo</label>
+							</div>
+
+							<div class="form-check col-2">
+								<input type="checkbox" class="form-check-input" th:field="*{drenagem}"
+									id="ch_drenagem"> <label for="ch_drenagem"
+									class="form-check-label">Drenagem</label>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-check col-2">
+								<input type="checkbox" class="form-check-input" th:field="*{redeEnergia}"
+									id="ch_energia"> <label for="ch_energia"
+									class="form-check-label">Rede de Energia</label>
+							</div>
+
+							<div class="form-check col-2">
+								<input type="checkbox" class="form-check-input" th:field="*{redeEsgoto}"
+									id="ch_esgoto"> <label for="ch_esgoto"
+									class="form-check-label">Rede de Esgoto</label>
+							</div>
+
+							<div class="form-check col-2">
+								<input type="checkbox" class="form-check-input" th:field="*{fossaSeptica}"
+									id="ch_fossa"> <label for="ch_fossa"
+									class="form-check-label">Fossa Séptica</label>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+
+				<div class="card">
+
+					<div class="card-body">
+
+						<div class="container-fluid">
+							<div class="col-sm-12 text-center">
+								<button type="submit" class="btn btn-primary" title="Submit">Cadastrar</button>
+								<button class="btn btn-warning" title="Cancel">Cancelar</button>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</form>
+
+
+		</div>
+
+	</section>
+
+
+</body>
+</html>
