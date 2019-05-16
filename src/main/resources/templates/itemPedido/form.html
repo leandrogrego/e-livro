@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html layout:decorate="~{'/layouts/layout'}">
+<head>
+<meta charset="UTF-8" />
+<title>Realizar Pedido</title>
+
+</head>
+<body>
+    <div class="content-wrapper" layout:fragment="corpo">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>Livros Disponíveis</strong>
+            </div>
+            <form class="container" method="post" th:object="${itemPedido}"
+                    th:action="@{/itemPedido/save}">
+                <!--Input responsável em guardar o id-->
+                <input id="id" name="id" type="hidden" th:field="*{id}"
+                            th:value="*{id}">
+                <!-- div reponsável em mostrar os erros -->
+                <div class="form-group row">
+                    <div class="alert alert-danger alert-dismissible fade show"
+                                role="alert" th:if="${#fields.hasAnyErrors()}">
+                        <button type="button" class="close" data-dismiss="alert"
+                                    aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                        <div th:each="detailedError : ${#fields.detailedErrors()}">
+                            <strong th:text="${detailedError.message}"> </strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div th:each="livro : ${livros}">
+                        <hr class="sidebar-divider my-1">
+                        <div class="row">
+                            <div class="form-group col-md-2">
+                                <div class="w3-padding w3-xlarge w3-teal">
+                                    <div>
+                                        <li class="w3-jumbo w3-teal"><i class="fas fa-fw fa-book"></i></li>
+                                    </div>	
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div th:field="*{livro}" ></div>
+                                <label>Titulo:</label> <div th:text="${livro.titulo}" ></div>
+                                <label>Sinopse:</label> <div th:text="${livro.sinopse}" ></div>		
+                                <label>Preço:</label> <div th:text="${livro.preco}" ></div>
+                                <input type="hidden" th:field="*{livro}" th:value="${livro.id}">
+                                <button type="submit" class="btn btn-success">Comprar</button> 
+                                <br>
+                            </div>
+                            <d  iv class="form-group col-md-4">
+                            <label>Ano:</label> <div th:text="${livro.ano}" ></div>									
+                            <label>Editora: </label><div th:text="${livro.editora.nome}" ></div>
+                            <label>Autor(es):</label>
+                            <div th:each="autor : ${livro.autor}" >
+                                <div th:text= "${autor.nome}" ></div>								
+                            </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <a class="btn btn-sm btn-info" th:href="@{/livro/details/{id}(id=${livro.id})}" >Mais Detalhes Sobre o Livro</a>
+                            </div>
+                            </div>
+                        <hr class="sidebar-divider my-0">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <button class="btn btn-sm btn-danger"><a th:href="@{/itemPedido/add}">Cancelar Pedido</a></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+	
+</body>
+</html>

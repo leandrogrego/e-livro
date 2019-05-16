@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html layout:decorate="~{'/layouts/layout'}">
+<head>
+<meta charset="UTF-8" />
+<title>Resumo do Pedido</title>
+</head>
+<body>
+
+		<div class="content-wrapper" layout:fragment="corpo">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<strong>Carrinho de Compras</strong>
+					<div><label>Itens do Pedido</label></div>	
+					<hr class="sidebar-divider my-1">	
+					
+					<div class="form-group row">
+							
+									
+									
+									
+											<div th:each="livro : ${itemPedido.livro}" >
+											
+												<div class="form-group col-md-2">
+												
+														<div>
+															<li class="w3-xxlarge"><i class="fas fa-fw fa-book"></i></li>
+														</div>	
+																			
+												</div>	
+												<div class="form-group col-md-10">
+												<label>Titulo do Livro:</label>
+												<div th:text="${livro.titulo}" ></div>
+											
+											
+												<label>Preço:</label>
+												<div th:text="${livro.preco}" ></div>
+										</div>
+														
+									</div>
+								</div>
+								<hr class="sidebar-divider my-0">
+								
+								
+								<div><label>Valor Total do Pedido:</label>
+								<div th:text="${itemPedido.valorTotal}" ></div></div>
+								<div><label>Quantidade de Itens:</label>
+								<label><div th:text="${itemPedido.quantidade}" ></div></label></div>
+								<a class="btn btn-sm btn-primary" th:href="@{/pedido/addPedido/{id}(id=${itemPedido.id})}" >Confirmar</a>
+								
+							
+						
+					
+					</div>
+				</div>
+				</div>
+	
+</body>
+</html>

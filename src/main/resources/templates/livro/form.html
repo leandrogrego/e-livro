@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html layout:decorate="~{'/layouts/layout'}">
+<head>
+<meta charset="UTF-8" />
+<title>Cadastro de Livro</title>
+
+<style>
+div.scrollmenu {
+  background-color: white;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+div.scrollmenu a {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+  background-color: white;
+}
+</style>
+
+</head>
+<body>
+		<div class="content-wrapper" layout:fragment="corpo">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<strong>Cadastro de Livro</strong>
+				</div>
+			<form class="container" method="post" th:object="${livro} "
+				th:action="@{/livro/save}">
+
+				<!--Input responsável em guardar o id-->
+				<input id="id" name="id" type="hidden" th:field="*{id}"
+					th:value="*{id}">
+                                
+
+				<!-- div reponsável em mostrar os erros -->
+				<div class="form-group row">
+					<div class="alert alert-danger alert-dismissible fade show"
+						role="alert" th:if="${#fields.hasAnyErrors()}">
+
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+
+						<div th:each="detailedError : ${#fields.detailedErrors()}">
+							<strong th:text="${detailedError.message}"> </strong>
+						</div>
+					</div>
+				</div>
+				
+				<!-- 
+				<div class="form-group row">
+					<select th:field="*{autor}" class="form-control">
+						<option selected value="-1">Selecione um Autor</option>
+						<option th:each="autor : ${autores}"
+							th:value="${autor.id}" th:text="${autor.nome}"></option>
+					</select>
+				</div>
+				 -->
+				 <label>Selecione o(s) Autor(es):</label>
+				 <div class="form-group">
+				 <div class="scrollmenu">
+					 <div th:each="autor : ${autores}">
+						 <input type="checkbox" th:field="*{autor}" th:value="${autor.id}"><span th:text="${'  '}"></span><span th:text="${autor.nome}"></span><br>
+					 </div>
+				 </div>
+				 </div>
+				 
+				<div class="form-group row">
+					<select th:field="*{editora}" class="form-control">
+						<option selected value="-1">Selecione uma Editora</option>
+						<option th:each="editora : ${editoras}"
+							th:value="${editora.id}" th:text="${editora.nome}"></option>
+					</select>
+				</div>
+				
+				<div class="form-group row">
+					<select th:field="*{categoria}" class="form-control">
+						<option selected value="-1">Selecione uma Categoria</option>
+						<option th:each="categoria : ${categorias}"
+							th:value="${categoria.id}" th:text="${categoria.nome}"></option>
+					</select>
+				</div>
+				
+				<div class="form-group row">                                                          
+					<div class="col-md-4" th:classappend="${#fields.hasErrors('titulo')}? 'has-error'">
+					    <label>Titulo</label>
+					    <input type="text" class="form-control input-sm" th:field="*{titulo}" autofocus="autofocus"  maxlength="150"/>
+					</div>
+				</div>
+				
+				
+				
+				<div class="form-group row">                                                          
+					<div class="col-md-4" th:classappend="${#fields.hasErrors('sinopse')}? 'has-error'">
+					    <label>Sinopse</label>
+					    <input type="text" class="form-control input-sm" th:field="*{sinopse}" autofocus="autofocus"  maxlength="500"/>
+					</div>
+				</div>
+				
+				<div class="form-group row">
+					<div class="col-md-4" th:classappend="${#fields.hasErrors('edicao')}? 'has-error'">
+						<label>Edição</label> 
+						<input type="text" class="form-control input-sm" th:field="*{edicao}" autofocus="autofocus"  maxlength="150" />
+					</div>
+				</div>
+				
+				<div class="form-group row">                                                          
+					<div class="col-md-4" th:classappend="${#fields.hasErrors('ano')}? 'has-error'">
+					    <label>Ano</label>
+					    <input type="text" class="form-control input-sm" th:field="*{ano}" autofocus="autofocus"  maxlength="150"/>
+					</div>
+				</div>
+				
+				<div class="form-group row">                                                          
+					<div class="col-md-4" th:classappend="${#fields.hasErrors('peso')}? 'has-error'">
+					    <label>Peso</label>
+					    <input type="text" class="form-control input-sm" th:field="*{peso}" autofocus="autofocus"  maxlength="500"/>
+					</div>
+				</div>
+				
+				<div class="form-group row">
+					<div class="col-md-4" th:classappend="${#fields.hasErrors('preco')}? 'has-error'">
+						<label>Preço</label> 
+						<input type="text" class="form-control input-sm" th:field="*{preco}" autofocus="autofocus" maxlength="150" />
+					</div>
+				</div>
+                                <div class="form-group row">
+                                    <label>Capa</label> 
+                                    <img id="img" th:src="@{/livro/capa/{id}(id=${livro.id})}" width="100"/>
+                                    <input id="upload" type="file" class="input-sm" name="capa" onChange="uploadimg()">
+                                </div>
+
+				<div class="form-group row">
+					<button type="submit" class="btn btn-primary">Cadastrar</button>
+                                        
+					<button class="btn btn-sm btn-danger"><a th:href="@{/}">Cancelar</a></button>
+				</div>
+			</form>
+		</div>
+		</div>
+        <script src="@{/js/uploading.js}" type="text/javascript"></script>
+</body>
+</html>

@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html 
-xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
-layout:decorate="~{layout}">
+<html layout:decorate="~{'/layouts/layout'}">
 <head>
-<title>Spring-Boot Básico</title>
 <meta charset="UTF-8" />
+<title>Cadastro de Categoria</title>
 </head>
 <body>
-
 		<div class="content-wrapper" layout:fragment="corpo">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<strong>Cadastro de Categorias</strong>
+				</div>
 			<form class="container" method="post" th:object="${categoria}"
 				th:action="@{/categoria/save}">
 
@@ -31,18 +32,23 @@ layout:decorate="~{layout}">
 						</div>
 					</div>
 				</div>
-
-				<div class="form-group">
-					<label for="usr">Name:</label> <input type="text"
-						th:field="*{nome}" class="form-control" id="usr">
+				
+				<div class="form-group row">                                                          
+					<div class="col-md-4" th:classappend="${#fields.hasErrors('nome')}? 'has-error'">
+					    <label>Nome</label>
+					    <input type="text" class="form-control input-sm" th:field="*{nome}" autofocus="autofocus" placeholder="Informe o Nome" maxlength="150"/>
+					</div>
 				</div>
-
-				<button type="submit" class="btn btn-primary">Cadastrar</button>
+				
+				<div class="form-group row">
+					<button type="submit" class="btn btn-primary">Cadastrar</button>
+					<button class="btn btn-sm btn-danger"><a th:href="@{/}">Cancelar</a></button>
+				</div>
 
 			</form>
 
 		</div>
-
+		</div>
 	
 </body>
 </html>

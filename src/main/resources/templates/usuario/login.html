@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html layout:decorate="~{'/layouts/layout'}">
+<head>
+<meta charset="UTF-8" />
+<title>Login de Usuario</title>
+</head>
+<body>
+		<div class="content-wrapper" layout:fragment="corpo">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<strong>Login de Usuarios</strong>
+				</div>
+			<form class="container" method="post" th:object="${usuario}"
+				th:action="@{/usuario/login}">
+
+				<div class="form-group row">
+					<div class="col-md-4" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
+                                            <label>Email</label> 
+                                            <input type="text" class="form-control input-sm" th:field="*(email)" maxlength="150" placeholder="Informe o Email"/>
+					</div>
+				</div>
+				
+				<div class="form-group row">
+					<div class="col-md-4" th:classappend="${#fields.hasErrors('senha')}? 'has-error'">
+                                            <label>Senha</label> 
+                                            <input type="password" class="form-control input-sm" th:field="*{senha}" maxlength="150" placeholder="Informe a Senha"/>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<button type="submit" class="btn btn-primary">Login</button>
+				</div>
+
+			</form>
+
+		</div>
+		</div>
+
+	
+</body>
+</html>

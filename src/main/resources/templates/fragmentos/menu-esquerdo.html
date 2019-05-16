@@ -1,0 +1,67 @@
+<div th:fragment="menu-esquerdo">
+        <ul class="navbar-nav bg-gradient-warning sidebar sidebar-dark accordion"
+                id="accordionSidebar">
+                <!-- Menu esquerdo -->
+                <a class="sidebar-brand d-flex align-items-center justify-content-center"
+                        th:href="@{/}">
+                        <div>
+                                <i class="fas fa-fw fa-book"></i>
+                        </div>				
+                        <div class="sidebar-brand-text mx-3">E-livros</div>				
+                </a>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider my-0">
+
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item active"><a class="nav-link"
+                        th:href="@{/usuario/add}"> <i class="fas fa-fw fa-user"></i> <span>Cadastre-se</span>
+                </a></li>
+                
+                <li class="nav-item active"><a class="nav-link"
+                        th:href="@{/usuario/login}"> <i class="fas fa-fw fa-user"></i> <span>Entrar</span>
+                </a></li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+                <!-- Heading -->
+
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item"><a class="nav-link collapsed" href="#"
+                        data-toggle="collapse" data-target="#collapseComprar"
+                        aria-expanded="false" aria-controls="collapseComprar"> <i
+                                class="fas fa-fw fa-book"></i> <span>Comprar</span></a>
+
+                        <div id="collapseComprar" class="collapse" aria-labelledby="headingTwo"
+                                data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                        <!-- <a class="collapse-item" th:href="@{/usuario/logar}">Entrar</a>  -->
+                                        <a class="collapse-item" th:href="@{/itemPedido/add}">Livro</a>
+                                </div>
+                        </div>
+                </li>
+
+                <!-- Nav Item - Utilities Collapse Menu -->
+                <li class="nav-item"><a class="nav-link collapsed" href="#"
+                        data-toggle="collapse" data-target="#collapseCompras"
+                        aria-expanded="true" aria-controls="collapseCompras"> <i
+                                class="fas fa-fw fa-search"></i> <span>Minhas Compras</span></a>
+
+                        <div id="collapseCompras" class="collapse"
+                                aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                        <a class="collapse-item" th:href="@{/pedido/listar}">Ver Pedidos</a>
+                                </div>
+                        </div>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+                <!-- Heading -->
+                <div class="sidebar-heading">Configurações</div>
+
+                <!-- Nav Item - Pages Collapse Menu -->
+        </ul>
+</div>
