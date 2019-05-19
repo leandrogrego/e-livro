@@ -22,10 +22,30 @@ public class CategoriaController {
 	private CategoriaService categoriaService;
 			
 	@RequestMapping("/add")
-	public ModelAndView add(Categoria cat) {
+	public ModelAndView add(Categoria categoria) {
 		ModelAndView mv = new ModelAndView("categoria/form");
-		mv.addObject("categoria", cat);
+		mv.addObject("categoria", categoria);
 		return mv;
+	}
+	
+	@PostMapping("/save")
+    public ModelAndView save(@Valid Categoria categoria, BindingResult result) {
+		 
+		if(result.hasErrors()) {
+			return add(categoria);
+	    }
+
+		categoriaService.save(categoria);			
+				
+		return findAll();
+    }
+	
+	@GetMapping("/listar")
+	private ModelAndView findAll() {
+		ModelAndView mv = new ModelAndView("categoria/listar");
+        mv.addObject("categorias", categoriaService.listaAll());
+        
+        return mv;
 	}
 		
 	@GetMapping("/edit/{id}")
@@ -41,39 +61,4 @@ public class CategoriaController {
 		return findAll();
 	}
 
-
-	
-	@PostMapping("/save")
-    public ModelAndView save(@Valid Categoria cat, BindingResult result) {
-		 
-		if(result.hasErrors()) {
-			return add(cat);
-	    }
-
-		categoriaService.cadastrar(cat);
-		ModelAndView rec =findAll(); 
-		return rec;
-    }
-
-	@GetMapping("/lista")
-	private ModelAndView findAll() {
-		ModelAndView mv = new ModelAndView("categoria/lista");
-        mv.addObject("categorias", categoriaService.listaAll());
-        return mv;
-	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

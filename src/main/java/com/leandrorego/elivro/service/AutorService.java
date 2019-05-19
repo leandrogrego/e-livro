@@ -14,25 +14,20 @@ public class AutorService {
 
 	@Autowired
 	private AutorRepository repository;
+	
+	public Autor save(Autor autor) {
+		return repository.saveAndFlush(autor);
+	}
 
-	public List<Autor> listaAll(){
+	public List<Autor> findAll() {
 		return repository.findAll();
 	}
 	
-	public void cadastrar(Autor aut) {
-		repository.saveAndFlush(aut);
+	public Autor findOne(Long id) {
+		return repository.getOne(id);
 	}
 	
-	public Autor  findOne(Long id) {
-        return repository.getOne(id);
-    }
-     
-    public Autor save(Autor aut) {
-        return repository.saveAndFlush(aut);
-    }
-     
-    public void delete(Long id) {
-        repository.deleteById(id);
-    }
-
+	public void delete(Long id) {
+		repository.deleteById(id);
+	}
 }

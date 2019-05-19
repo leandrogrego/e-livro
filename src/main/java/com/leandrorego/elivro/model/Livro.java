@@ -1,36 +1,74 @@
 package com.leandrorego.elivro.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 @Entity
-@Table(name="livro")
-//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Livro implements Serializable {
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue
 	private Long id;
-	private Autor autor;
-
+	
 	@Column(nullable = false, length = 100)
-	@NotBlank(message = "Título é uma informação obrigatória.")
+	@NotBlank(message = "Titulo é uma informação obrigatória.")
 	private String titulo;
-		
+	
+	@Column(nullable = false, length = 150)
+	@NotBlank(message = "Sinopse é uma informação obrigatória.")
+	private String sinopse;
+	
+	@Column(nullable = false, length = 15)
+	@NotBlank(message = "Edição é uma informação obrigatória.")
+	private String edicao;
+	
+	//@Column(nullable = false, length = 5)
+	//@NotBlank(message = "Ano é uma informação obrigatória.")
+	private Long ano;
+	
+	//@Column(nullable = false, length = 15)
+	//@NotBlank(message = "Isbn é uma informação obrigatória.")
+	private int isbn;
+	
+	//@Column(nullable = false, length = 15)
+	//@NotBlank(message = "Peso é uma informação obrigatória.")
+	private double peso;
+	
+	//@Column(nullable = false, length = 15)
+	//@NotBlank(message = "Preço é uma informação obrigatória.")
+	private double preco;
+	
+	@ManyToOne
+	public Editora editora;
+	
+	@ManyToOne
+	public Categoria categoria;
+	
+	@ManyToMany
+	@JoinTable(name="livro_autor")
+	public List<Autor> autor;
+	
+	@ManyToMany(mappedBy="livro")
+	public List<ItemPedido> itemPedido;
+
+	public List<ItemPedido> getItemPedido() {
+		return itemPedido;
+	}
+
+	public void setItemPedido(List<ItemPedido> itemPedido) {
+		this.itemPedido = itemPedido;
+	}
 
 	public Long getId() {
 		return id;
@@ -44,20 +82,77 @@ public class Livro implements Serializable {
 		return titulo;
 	}
 
-	public void setNome(String titulo) {
+	public void setTitulo(String titulo) {
 		this.titulo = titulo;
+	}
+
+	public String getSinopse() {
+		return sinopse;
+	}
+
+	public void setSinopse(String sinopse) {
+		this.sinopse = sinopse;
+	}
+
+	public String getEdicao() {
+		return edicao;
+	}
+
+	public void setEdicao(String edicao) {
+		this.edicao = edicao;
+	}
+
+	public Long getAno() {
+		return ano;
+	}
+
+	public void setAno(Long ano) {
+		this.ano = ano;
+	}
+
+	public double getPeso() {
+		return peso;
+	}
+
+	public void setPeso(double peso) {
+		this.peso = peso;
+	}
+
+	public double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(double preco) {
+		this.preco = preco;
+	}
+
+	public Editora getEditora() {
+		return editora;
+	}
+
+	public void setEditora(Editora editora) {
+		this.editora = editora;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
+	public List<Autor> getAutor() {
+		return autor;
+	}
+
+	public void setAutor(List<Autor> autor) {
+		this.autor = autor;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
-	public Autor getAutor() {
-		return autor;
-	}
-
-	public void setAutor(Autor autor) {
-		this.autor = autor;
-	}
+	
 
 }

@@ -10,30 +10,25 @@ import com.leandrorego.elivro.repository.CategoriaRepository;
 
 @Service
 public class CategoriaService {
-
+	
 	@Autowired
 	private CategoriaRepository repository;
 
+	public void save(Categoria categoria) {
+        repository.saveAndFlush(categoria);
+    }
+	
 	public List<Categoria> listaAll(){
 		return repository.findAll();
-	}
-	
-	public void cadastrar(Categoria cat) {
-		repository.saveAndFlush(cat);
 	}
 	
 	public Categoria  findOne(Long id) {
         return repository.getOne(id);
     }
      
-    public Categoria save(Categoria cat) {
-        return repository.saveAndFlush(cat);
-    }
-     
     public void delete(Long id) {
         repository.deleteById(id);
     }
 
-	
-	
+
 }
