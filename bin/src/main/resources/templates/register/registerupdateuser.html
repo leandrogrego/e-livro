@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{project/layout/layout}">
+	
+<head>
+<title th:if="${usuario.nome != null}">Lbook -Atualizar Usuario</title>
+<title th:if="${usuario.nome == null}">Lbook - Cadastra Usuario</title>
+</head>
+
+<body>
+	<div layout:fragment="corpo">
+	
+		<div class="row ml-4">
+			<div class="col-lg-11 ml-5 ">
+
+				<h1 th:if="${usuario.nome != null}" class="h4 text-gray-900 mb-4">Atualizar Usuário</h1>
+				<h1 th:if="${usuario.nome == null}" class="h4 text-gray-900 mb-4 mt-4">Cadastro Usuário</h1>
+
+				<!-- formulario-->
+				<form class="user" method="post" th:object="${usuario}" th:action="@{/lbook/usuario/salvar}" enctype="multipart/form-data">
+                   
+                    <input id="id" th:name="*{id}" type="hidden" th:field="*{id}" th:value="*{id}">
+                    
+					<div class="form-group row ">
+						<div class="col-md-12">
+							<div th:if="*{foto}"  class="col-md-2">
+								<img  th:src="@{/lbook/usuario/imagem/{id}(id=${usuario.id})}" id="uploadPreview" class=" pb-3 img-responsive  img-thumbnail rounded mx-auto d-block" />
+							</div>
+							
+							<div th:if="*{foto == null}"  class="col-md-2">
+								<img src="/img/usergreen.png" id="uploadPreview" class=" pb-3 img-responsive  img-thumbnail rounded mx-auto d-block" />
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group row">
+
+						<div class="col-md-2">
+							<div class="col-md-1 ml-4 mr-4 mt-0">
+							
+							    <!-- Botão que chama o input file -->
+								<label class="btn btn-success btn-circle" for='uploadImage'><i class="fas fa-folder-open" aria-hidden="true"></i></label>
+							    <input id="uploadImage" th:src="@{/lbook/usuario/imagem/{id}(id=${usuario.id})}"  type="file"  name="uploadfile" onchange="imgPrevia();"/>
+							</div>
+
+							<div class="col-md-1 mt-0">
+							    <!-- botão limpar foto -->
+								<span class="btn btn-danger btn-circle" onclick="excluir(1);"><i class="fas fa-trash" aria-hidden="true"></i></span>
+							</div>
+						</div>
+						
+                        <div class="col-sm-10 mb-sm-0">
+                        <label>Papéis:</label>
+                        <select th:field="${usuario.roles}"multiple="multiple" class="form-control form-control-user">
+                        <option th:each="role : ${roles}" th:value="${role.id}"
+						th:text="${role.nome}"></option>
+					    </select>
+                        </div>
+                        
+					</div>
+
+					<div class=" form-group row">
+                        
+					    <div class="col-sm-9 mt-1 mb-sm-0">
+							<label>Nome:</label>
+							<input type="text" th:name="*{nome}" th:field="*{nome}" th:value="*{nome}" class="form-control form-control-user" placeholder="" required>
+						</div>
+						
+						<div class="col-sm-8 mt-1 mb-sm-0">
+							<label>Nome Social:</label>
+							<input type="text" th:name="*{username}" th:field="*{username}" th:value="*{username}" class="form-control form-control-user" placeholder="" required>
+						</div>
+
+						<div class="col-sm-4 mt-1 mb-sm-0">
+							<label>CEP:</label>
+							<input type="text" id="cep" onkeypress="mascara(this, '#####-###')" maxlength="9" th:name="*{endereco.cep}" th:field="*{endereco.cep}" th:value="*{endereco.cep}" class="form-control form-control-user" placeholder="" required>
+						</div>
+					</div>
+
+					<div class="form-group row">
+					
+						<div class="col-sm-12">
+							<label>Logradouro:</label>
+							<input type="text" id="rua" th:name="*{endereco.logradouro}" th:field="*{endereco.logradouro}" th:value="*{endereco.logradouro}" class="form-control form-control-user" placeholder="">
+						</div>
+
+						<div class="col-sm-12">
+							<label>Bairro:</label>
+							 <input type="text" id="bairro" th:name="*{endereco.bairro}" th:field="*{endereco.bairro}" th:value="*{endereco.bairro}" class="form-control form-control-user" placeholder="">
+						</div>
+					</div>
+
+					<div class="form-group row">
+					
+						<div class="col-sm-9">
+							<label>Cidade:</label>
+							 <input type="text" id="cidade" th:name="*{endereco.localidade}" th:field="*{endereco.localidade}" th:valeu="*{endereco.localidade}" class="form-control form-control-user" placeholder="">
+						</div>
+
+						<div class="col-sm-3">
+							<label>UF:</label> <input type="text" id="uf" th:name="*{endereco.uf}" th:field="*{endereco.uf}" th:value="*{endereco.uf}" class="form-control form-control-user" placeholder="">
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-sm-12 mb-3 mb-sm-0">
+							<label>Complemento:</label>
+
+							<textarea th:name="endereco.complemento" rows="3"
+								th:field="*{endereco.complemento}"
+								th:value="*{endereco.complemento}"
+								class="md-textarea form-control form-control-user">
+									</textarea>
+						</div>
+					</div>
+					
+					<div class="form-group row">
+
+						<div class="col-sm-12">
+							<label>Senha:</label>
+							 <input type="text" th:name="*{password}" th:field="*{password}" th:value="*{password}" class="form-control form-control-user" placeholder="" required>
+						</div>
+					</div>
+					
+					
+                    <div class="form-group row">
+					<button type="submit" class="btn btn-success btn-user btn-block col-sm-12">Registrar</button>
+						<button type="reset" class="btn btn-default btn-user btn-block col-sm-12">Limpar</button>
+					</div>
+					<hr>
+				</form>
+				<hr>
+			</div>
+		</div>
+		
+		<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+		<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+		
+		<!-- Pegar cep na Api ViaCEP -->
+        <script th:src="@{/js/cepdados.js}"></script>
+        <!-- Mascara do CEP -->
+        <script th:src="@{/js/cepmascara.js}"></script>
+        <!-- Script para manipulação de imagem -->
+        <script th:src="@{/js/previaimguser.js}"></script>
+	</div>
+</body>
+</html>
+

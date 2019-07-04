@@ -5,34 +5,38 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.leandrorego.elivro.model.Livro;
+import com.leandrorego.elivro.models.Livro;
 import com.leandrorego.elivro.repository.LivroRepository;
-
 
 @Service
 public class LivroService {
 	
 	@Autowired
-	private LivroRepository repository;
-
-	public Livro save(Livro livro) {
-		return repository.saveAndFlush(livro);
-	}
-
-	public List<Livro> findAll() {
-		return repository.findAll();
+	private LivroRepository crud;
+	
+	public boolean create(Livro livro){
+		crud.saveAndFlush(livro);
+		return true;
 	}
 	
-	public Livro findOne(Long id) {
-		return repository.getOne(id);
+	public Livro findByid(long id){
+		return crud.getOne(id);
 	}
 	
-	public void delete(Long id) {
-		repository.deleteById(id);
+	public List<Livro> findAll(){
+		return crud.findAll();
 	}
 	
-	public List<Livro> findByPedido(Long id) {
-		return repository.findByPedido(id);
+	public Livro update(long id){
+		return crud.getOne(id);
 	}
-
+	
+	public boolean delete(Livro livro){
+		crud.delete(livro);
+		return true;
+	}
+	
+	public long count(){
+		return crud.count();
+	}
 }

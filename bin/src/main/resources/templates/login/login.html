@@ -1,0 +1,147 @@
+ <!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+	>
+	
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="Sistema de Gerenciamento de Prestadores de Serviços">
+<meta name="author" content="Matheus Pinheiro Pereira">
+
+<!--Fonts do layout-->
+<link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+<link th:href="@{https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i}" rel="stylesheet">
+
+<!-- Icon -->
+<link th:href="@{/img/book.png}" rel="icon">
+
+<!-- Estilo do layout-->
+<link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+<link th:href="@{/css/template.css}" rel="stylesheet">
+
+</head>
+
+<body class="background">
+	
+
+	<div class="container">
+
+		<div class="top-bar mt-4">
+
+			<div class="top-links col-xs-12 col-sm-6 col-md-6 col-lg-6">
+				<a th:href="@{/entrar}"><i class="fas fa-book rotate-15"></i> E-Livro</a> |
+				<a th:href="@{/entrar}" data-toggle="tooltip" data-html="true" data-placement="top" title="Todos os Livros do Mercado"> <i class="fas fa-book"></i> Livros </a> |
+				<a th:href="@{/entrar}" data-toggle="tooltip" data-html="true" data-placement="top" title="Lbook. 15 Anos"> <i class="fas fa-info-circle "></i> Informação </a>
+			</div>
+
+			<div class="top-co-inf col-xs-12 col-sm-6 col-md-6 col-lg-6">
+				<h6 data-toggle="tooltip" data-html="true" data-placement="top" title="Telefone Celular">
+					<i class="fas fa-phone-square"></i> Tel : (84) 999288314
+				</h6>
+				
+				<h6 data-toggle="tooltip" data-html="true" data-placement="top" title="Matheus Pinheiro Pereira">
+					<i class="fas fa-user-tie"></i> Desenvolvedor:
+				</h6>
+			</div>
+		</div>
+	</div>
+
+	<div class="row justify-content-center">
+
+
+		<div class="col-xl-7 col-lg-12 col-md-9">
+								
+			<div class="card o-hidden border-0 shadow-lg my-5">
+				<div class="card-body p-0">
+		
+					<div class="row">
+						<div class="col-lg-5 d-none d-lg-block pt-5">
+							<div class="col-lg-12 mt-5 ">
+								<img alt="Logo Livro" src="img/book.png" class="img-responsive center-block ml-4 mt-5	">
+							</div>
+						</div>
+
+						<div class="col-lg-7 p-3">
+							<div class="p-5">
+								<div class="text-center">
+									<h6 class="h4 text-gray-900 mt-2 mb-5">
+										<i class="fas fa-book rotate-15"></i> E-LIVRO
+									</h6>
+								</div>
+                                                                 <!-- Ação a ser chamada pelo security -->
+								<form class="user" method="post" action="/entrar">
+								    
+								    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+								    
+									<div class="form-group">
+										<input   name="username" class="form-control form-control-user mb-5" placeholder="Nome:">
+									</div>
+									
+									<div class="form-group">
+										<input type="password" name="password" class="form-control form-control-user mb-4"  placeholder="Senha:">
+									</div>
+
+									<div class="form-group">
+									  <div class="custom-control custom-checkbox small">
+										<input type="checkbox" id="remember-me" name="remember-me"  class="custom-control-input"/>
+										<label class="custom-control-label" for="remember-me">Lembrar?</label>
+										</div>
+									</div>
+
+									<button  class="btn btn-success btn-user btn-block ">Entrar</button>
+									<hr>
+								</form>
+								
+								<hr>
+								
+								<div class="text-center">
+									<a class="small" >Esqueceu Senha?</a>
+								</div>
+								
+								<div class="text-center">
+									<a class="small" >Crie sua conta!</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+	<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+	<!-- Core plugin JavaScript-->
+	<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+	<!-- Custom scripts for all pages-->
+	<script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+	<!-- Page level plugins -->
+	<script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+
+	<!-- Page level custom scripts -->
+	<script th:src="@{/js/demo/datatables-demo.js}"></script>
+
+	<script>
+		$('[data-toggle="tooltip"]').tooltip();
+	</script>
+	<script>
+		$(function() {
+			$('.btn-loading').on('click', function() {
+				$btn = $(this).button('loading');
+				setTimeout(function() {
+					$btn.button('reset');
+				}, 1000);
+			});
+		});
+	</script>
+</body>
+</html>

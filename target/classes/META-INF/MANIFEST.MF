@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: livraria
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: 20162094040001
-Implementation-Vendor-Id: br.ifrn.edu
-Build-Jdk: 1.8.0_172
+Built-By: Leandro
+Implementation-Vendor-Id: br.com.project.livraria
+Build-Jdk: 1.8.0_212-1-ojdkbuild
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
  ot-starter-parent/livraria
 Created-By: Maven Integration for Eclipse

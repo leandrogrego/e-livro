@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout">
+<!-- Menu barra simples -->
+
+<nav th:fragment="menu-barra"  class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+</nav>
+<body>
+<!-- Pesquisa do campo Menu Superior -->
+<form th:fragment="pesquisa" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+	<div class="input-group">
+		<input type="text" class="form-control bg-light border-0 small" placeholder="Procurar por.." aria-label="Search" aria-describedby="basic-addon2">
+		<div class="input-group-append">
+			<button class="btn btn-primary" type="button">
+				<i class="fas fa-search fa-sm"></i>
+			</button>
+		</div>
+	</div>
+</form>
+<!-- Fim da pesquisa do campo Menu Superior -->
+
+
+<!-- Menu de informações do usuário -->
+<ul th:fragment="menu-usuario" class="navbar-nav ml-auto">
+<a class="mt-3 mr-4  text-gray-500" th:href="@{/lbook/livros/venda}"data-toggle="tooltip" data-html="true" data-placement="top" title="Realizar compras" ><i class=" fa-2x fas fa-store"></i></a>
+<a class="mt-3 mr-4 text-gray-500" th:href="@{/lbook/livros/venda}"data-toggle="tooltip" data-html="true" data-placement="top" title="Pedidos"  ><i class="  fa-2x fas fa-shopping-cart mr-3"></i><span th:if="${session.usuarioLogado.carrinho != null}" th:text="${session.usuarioLogado.carrinho.itensQuantidade}"></span></a>
+   
+	<li class="topbar-divider d-none d-sm-block"> </li>
+	<!-- Informações do usuário -->
+	<li class="nav-item dropdown no-arrow">
+	  <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span th:text="${session.usuarioLogado.nome}"></span>
+	 <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
+	  
+	 <span  th:if="${session.usuarioLogado.foto != null}">
+        <img class=" img-profile rounded-circle" th:src="@{/lbook/usuario/imagem/{id}(id=${session.usuarioLogado.id})}">
+     </span>
+     
+     <span th:if="${session.usuarioLogado.foto == null}">
+       <img class="img-profile rounded-circle" src="/img/usergreen.png">
+     </span>
+	</a>
+	
+	 <!-- Dropdown - Usuário informações -->
+		<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+			<a class="dropdown-item" href="#"> <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>Perfil</a>
+			<a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>Definições</a>
+
+			<div class="dropdown-divider"></div>
+			
+			<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Sair</a>
+		</div>
+	</li>
+</ul>
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script>
+		$('[data-toggle="tooltip"]').tooltip();
+	</script>
+	<script>
+		$(function() {
+			$('.btn-loading').on('click', function() {
+				$btn = $(this).button('loading');
+				setTimeout(function() {
+					$btn.button('reset');
+				}, 1000);
+			});
+		});
+	</script>
+<!-- fim do menu de informações do usuário -->
+</body>
+</html>

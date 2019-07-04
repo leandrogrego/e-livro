@@ -5,29 +5,39 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.leandrorego.elivro.model.Autor;
+import com.leandrorego.elivro.models.Autor;
 import com.leandrorego.elivro.repository.AutorRepository;
-
 
 @Service
 public class AutorService {
-
 	@Autowired
-	private AutorRepository repository;
+	private AutorRepository crud;
+   
+	public boolean create(Autor autor){
+		crud.saveAndFlush(autor);
+		return true;
+	}
 	
-	public Autor save(Autor autor) {
-		return repository.saveAndFlush(autor);
+    
+    public List<Autor> findAll() {
+		return crud.findAll();
+	}
+	
+	public Autor update(long id){
+		return crud.getOne(id);
+	}
+	
+	public boolean delete (Autor autor){
+		   crud.delete(autor);
+		   return true;
+   	} 
+	
+   	public long count(){
+	   return crud.count();
+   	}
+
+   	public Autor findByid(long id) {
+		return crud.findById(id);
 	}
 
-	public List<Autor> findAll() {
-		return repository.findAll();
-	}
-	
-	public Autor findOne(Long id) {
-		return repository.getOne(id);
-	}
-	
-	public void delete(Long id) {
-		repository.deleteById(id);
-	}
 }

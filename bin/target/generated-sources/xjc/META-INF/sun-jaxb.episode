@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bindings version="2.1" xmlns="http://java.sun.com/xml/ns/jaxb">
+  <!--
+
+Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
+Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
+Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
+Gerado em: 2019.05.10 às 03:50:10 PM BRT 
+
+  -->
+  <bindings scd="x-schema::tns" xmlns:tns="http://ws.cdyne.com/WeatherWS/">
+    <schemaBindings map="false">
+      <package name="br.com.project.livraria.wsdl"/>
+    </schemaBindings>
+    <bindings scd="tns:GetWeatherInformation">
+      <class ref="br.com.project.livraria.wsdl.GetWeatherInformation"/>
+    </bindings>
+    <bindings scd="tns:GetWeatherInformationResponse">
+      <class ref="br.com.project.livraria.wsdl.GetWeatherInformationResponse"/>
+    </bindings>
+    <bindings scd="~tns:ArrayOfWeatherDescription">
+      <class ref="br.com.project.livraria.wsdl.ArrayOfWeatherDescription"/>
+    </bindings>
+    <bindings scd="tns:GetCityForecastByZIP">
+      <class ref="br.com.project.livraria.wsdl.GetCityForecastByZIP"/>
+    </bindings>
+    <bindings scd="tns:GetCityForecastByZIPResponse">
+      <class ref="br.com.project.livraria.wsdl.GetCityForecastByZIPResponse"/>
+    </bindings>
+    <bindings scd="~tns:ForecastReturn">
+      <class ref="br.com.project.livraria.wsdl.ForecastReturn"/>
+    </bindings>
+    <bindings scd="tns:GetCityWeatherByZIP">
+      <class ref="br.com.project.livraria.wsdl.GetCityWeatherByZIP"/>
+    </bindings>
+    <bindings scd="tns:GetCityWeatherByZIPResponse">
+      <class ref="br.com.project.livraria.wsdl.GetCityWeatherByZIPResponse"/>
+    </bindings>
+    <bindings scd="~tns:WeatherReturn">
+      <class ref="br.com.project.livraria.wsdl.WeatherReturn"/>
+    </bindings>
+    <bindings scd="~tns:WeatherDescription">
+      <class ref="br.com.project.livraria.wsdl.WeatherDescription"/>
+    </bindings>
+    <bindings scd="~tns:ArrayOfForecast">
+      <class ref="br.com.project.livraria.wsdl.ArrayOfForecast"/>
+    </bindings>
+    <bindings scd="~tns:Forecast">
+      <class ref="br.com.project.livraria.wsdl.Forecast"/>
+    </bindings>
+    <bindings scd="~tns:temp">
+      <class ref="br.com.project.livraria.wsdl.Temp"/>
+    </bindings>
+    <bindings scd="~tns:POP">
+      <class ref="br.com.project.livraria.wsdl.POP"/>
+    </bindings>
+  </bindings>
+</bindings>
+

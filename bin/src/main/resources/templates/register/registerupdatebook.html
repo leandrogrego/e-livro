@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{project/layout/layout}">
+<head>
+     <title th:if="${livro.titulo != null}">Lbook-Atualizar Livro</title>
+     <title th:if="${livro.titulo == null}">Lbook - Cadastra Livro</title>
+</head>
+
+<body>
+	<div layout:fragment="corpo">
+	
+		<div class="row ml-4">
+			<div class="col-lg-11 ml-5 ">
+
+				<h1 th:if="${livro.titulo != null}" class="h4 text-gray-900 mb-4">Atualizar Livros</h1>
+				<h1 th:if="${livro.titulo == null}" class="h4 text-gray-900 mb-4">Cadastro de Livros</h1>
+				
+				<!-- formulario-->
+				<form class="user" method="post" th:object="${livro}" th:action="@{/lbook/livro/salvar}"  enctype="multipart/form-data">
+
+					<input id="id" th:name="*{id}" type="hidden" th:field="*{id}" th:value="*{id}">
+					
+                     <label  class="h4 text-gray-900 mb-4" >Autores:</label>
+                     
+					<div class="form-group row">
+						<div class="form-group row col-sm-12">
+							<div class="col-sm-3">
+							
+								<button class="btn btn-success btn-circle add_field_button">
+									<i class="fas fa-user-plus"></i>
+								</button>
+								
+								<span> Adicionar Autores</span>
+							</div>
+						</div>
+					</div>
+					
+					<hr class="col-sm-12">
+					
+					<!-- Div para adiconar novos campos ou atualizar -->
+					<div class="input_fields_wrap">
+						<div th:each="autor,indice : *{autores}" class="form-group row">
+						
+						    <input id="id" th:name="|autores[${indice.index}].id|" type="hidden" th:value="${autor.id}">
+							
+							<div class="col-sm-11">
+								<label >Autor:</label>
+								 <input type="text" id="limpar" th:name="|autores[${indice.index}].nome|" th:value="${autor.nome}" class=" limpar form-control form-control-user" placeholder="Nome do Autor">
+							</div>
+							
+							<div class="col-sm-11">
+								<label>CPF:</label>
+								<input type="text"  onkeypress='mascaraMutuario(this,cpfCnpj)' onblur='clearTimeout()' th:name="|autores[${indice.index}].CPF|" th:value="${autor.CPF}" class="form-control form-control-user"  maxlength="14" placeholder="CPF">
+							</div>
+									
+							<div class="col-sm-11">
+								<label>E-mail:</label>
+							    <input type="email" th:name="|autores[${indice.index}].email|" th:value="${autor.email}" class="form-control form-control-user" placeholder="E-mail">
+							</div>
+							
+							<a class="col-sm-1 mt-4 remove_field  " >
+								<button onclick="excluirdado(1)" class=" btn btn-danger btn-circle">
+									<i class="fas fa-user-minus"></i>
+								</button>
+							</a>
+						</div>
+					</div>
+					
+                    <label  class="h4 text-gray-900 mb-4 pl-0 ml-0" >Livros:</label>
+                    
+                     <input id="id" th:name="*{id}" type="hidden" th:field="*{id}" th:value="*{id}">
+                    
+					<div class="form-group row ">
+					
+						<div class="col-md-12">
+						
+							<div th:if="*{foto}"  class="col-md-2">
+								<img  th:src="@{/lbook/usuario/imagem/{id}(id=${usuario.id})}" id="uploadPreview" class=" pb-3 img-responsive  img-thumbnail rounded mx-auto d-block" />
+							</div>
+							
+							<div th:if="*{foto == null}"  class="col-md-2">
+								<img src="/img/livro.jpg" id="uploadPreview" class=" pb-3 img-responsive  img-thumbnail rounded mx-auto d-block" />
+							</div>
+							
+						</div>
+					</div>
+					
+					<div class="form-group row">
+
+						<div class="col-md-2">
+							<div class="col-md-1 ml-4 mr-4 mt-0">
+							
+							    <!-- Botão que chama o input file -->
+								<label class="btn btn-success btn-circle" for='uploadImage'><i class="fas fa-folder-open" aria-hidden="true"></i></label>
+								
+							    <input id="uploadImage" type="file"  name="uploadfile" onchange="imgPrevia();"/>
+							</div>
+
+							<div class="col-md-1 mt-0">
+							
+							    <!-- botão limpar foto -->
+								<span class="btn btn-danger btn-circle" onclick="excluir(1);"><i class="fas fa-trash" aria-hidden="true"></i></span>
+							</div>
+						</div>
+						
+						<div class="col-sm-10 mb-3 mb-sm-0">
+							<label><i>*</i> Titulo Livro:</label>
+							 
+							<input type="text" th:name="*{titulo}" th:field="*{titulo}" th:value="*{titulo}" class="form-control form-control-user" placeholder="" required>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-sm-6">
+						
+							<label><i>*</i> Categoria:</label>
+							 <input type="text" th:name="*{categoria.nome}" th:field="*{categoria.nome}" th:value="*{categoria.nome}" class="form-control form-control-user" placeholder="" required>
+						</div>
+
+						<div class="col-sm-3">
+							<label>Ano Puplicação:</label>
+							 <input type="text" th:name="*{ano}"  th:field="*{ano}" th:value="*{ano}" id="date" maxlength="10" onKeyDown="Mascara(this,Data);" onKeyPress="Mascara(this,Data);" onKeyUp="Mascara(this,Data);" class="form-control form-control-user" placeholder="">
+						</div>	
+						
+						<div class="col-sm-3">
+							<label><i>*</i> ISBN:</label>
+							 <input type="text" th:name="*{isbn}" th:field="*{isbn}" th:value="*{isbn}" class="form-control form-control-user" placeholder="ISBN"  maxlength="13" id="int" onKeyDown="Mascara(this,Integer);" onKeyPress="Mascara(this,Integer);" onKeyUp="Mascara(this,Integer); ">
+						</div>
+					</div>
+
+					<div class="form-group row">
+						
+						<div class="col-sm-2">
+							<label>Edição:</label>
+							 <input type="number" name="*{edicao}" th:field="*{edicao}" th:value="*{edicao}" class="form-control form-control-user" placeholder="Informe a Edição">
+						</div>
+
+						<div class="col-sm-2 mb-3 mb-sm-0">
+							<label>Peso:</label>
+							 <input type="text" name="peso" id="peso" th:field="*{peso}" th:value="*{peso}" class= "form-control form-control-user" placeholder="Peso"  maxlength="8">
+						</div>
+						
+						<div class="col-sm-2 mb-3 mb-sm-0">
+							<label>Preço R$:</label>
+							 <input type="text" name="peso" id="peso" th:field="*{valor}" th:value="*{valor}" class= "form-control form-control-user" placeholder="Preço"  onKeyPress="return(moeda(this,'.',',',event))">
+						</div>
+						
+						<div class="col-sm-6 mb-3 mb-sm-0">
+							<label>Editora:</label>
+							 <input th:name="*{editora.nome}" th:field="*{editora.nome}" th:value="*{editora.nome}" class="md-textarea form-control form-control-user" />
+						</div>
+						<div class="col-sm-12 mb-3 mb-sm-0">
+							<label>Cidade:</label>
+							 <input name="*{editora.cidade}" th:field="*{editora.cidade}" th:value="*{editora.cidade}" class="md-textarea form-control form-control-user" />
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-sm-12 mb-3 mb-sm-0">
+							<label>Sinopse:</label>
+							<textarea name="*{sinopse}" rows="3" th:field="*{sinopse}" th:value="*{sinopse}" class="md-textarea form-control form-control-user">
+							</textarea>
+						</div>
+					</div>
+
+					<button type="submit" class="btn btn-success btn-user btn-block col-sm-12">Registrar</button>
+					<button type="reset" class="btn btn-default btn-user btn-block col-sm-12">Limpar</button>
+					<hr class="col-sm-12 mt-5">
+				</form>
+				<hr>
+			</div>
+		</div>
+		
+		<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+		<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+		<!-- previa de imagem -->
+	    <script th:src="@{/js/uploadImgLivro.js}"></script>
+	    <!--criar campos dos autores -->
+	    <script th:src="@{/js/criarcampo.js}"></script>
+	    <script th:src="@{/js/mascara.js}"></script>
+	    <script th:src="@{/js/moedamascara.js}"></script>
+	    <script th:src="@{/js/mascarapeso.js}"></script>   
+	    
+	</div>
+</body>

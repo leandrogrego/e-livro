@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+	
+<head>
+<title th:if="${usuario.nome != null}">E-livro - Atualizar Usuario</title>
+<title th:if="${usuario.nome == null}">E-livro - Cadastrar Usuario</title>
+</head>
+
+<body>
+	<div layout:fragment="corpo">
+	<div class="row justify-content-center">
+		<div class="col-xl-8 col-lg-12 col-md-9 card o-hidden border-0 shadow-lg my-0">
+
+				<h1 th:if="${usuario.nome != null}" class="h4 text-gray-900 mb-4">Atualizar Usuário</h1>
+				<h1 th:if="${usuario.nome == null}" class="h4 text-gray-900 mb-4 mt-4">Cadastro Usuário</h1>
+
+				<!-- formulario-->
+				<form class="user" method="post" th:object="${usuario}" th:action="@{/usuario/salvar}" enctype="multipart/form-data">
+                   
+                    <input id="id" th:name="*{id}" type="hidden" th:field="*{id}" th:value="*{id}">
+                    
+					<div class="form-group row ">
+						<div class="col-md-4">
+						
+							<div th:if="*{foto}"  class="col-md-8">
+								<img  th:src="@{/usuario/imagem/{id}(id=${usuario.id})}" id="uploadPreview" class=" pb-3 img-responsive  img-thumbnail rounded mx-auto d-block" />
+							</div>
+							<div th:if="*{foto == null}"  class="col-md-8">
+								<img src="/img/user.png" id="uploadPreview" class=" pb-3 img-responsive  img-thumbnail rounded mx-auto d-block" />
+							</div>
+							
+							<div class="col-md-1 ml-4 mr-4 mt-0">
+							
+							    <!-- Botão que chama o input file -->
+								<label class="btn btn-success btn-circle" for='uploadImage'><i class="fas fa-folder-open" aria-hidden="true"></i></label>
+							    <input id="uploadImage" th:src="@{/usuario/imagem/{id}(id=${usuario.id})}"  type="file"  name="uploadfile" onchange="imgPrevia();"/>
+							    <!-- botão limpar foto -->
+								<span class="btn btn-danger btn-circle" onclick="excluir(1);"><i class="fas fa-trash" aria-hidden="true"></i></span>
+							</div>
+						</div>
+					    <div class="col-sm-12 mt-1 mb-sm-0">
+							<label>Nome:</label>
+							<input type="text" th:name="*{nome}" th:field="*{nome}" th:value="*{nome}" class="form-control form-control-user" placeholder="" required>
+						</div>
+						
+						<div class="col-sm-8 mt-1 mb-sm-0">
+							<label>E-mail:</label>
+							<input type="email" th:name="*{username}" th:field="*{username}" th:value="*{username}" class="form-control form-control-user" placeholder="" required>
+						</div>
+
+						<div class="col-sm-4 mt-1 mb-sm-0">
+							<label>CEP:</label>
+							<input type="text" id="cep" onkeypress="mascara(this, '#####-###')" maxlength="9" name="*{endereco.cep}" th:field="*{endereco.cep}" value="*{endereco.cep}" class="form-control form-control-user" placeholder="" required>
+						</div>
+					</div>
+
+					<div class="form-group row">
+					
+						<div class="col-sm-12">
+							<label>Logradouro:</label>
+							<input type="text" id="rua" th:name="*{endereco.logradouro}" th:field="*{endereco.logradouro}" th:value="*{endereco.logradouro}" class="form-control form-control-user" placeholder="">
+						</div>
+
+						<div class="col-sm-12">
+							<label>Bairro:</label>
+							 <input type="text" id="bairro" th:name="*{endereco.bairro}" th:field="*{endereco.bairro}" th:value="*{endereco.bairro}" class="form-control form-control-user" placeholder="">
+						</div>
+					</div>
+
+					<div class="form-group row">
+					
+						<div class="col-sm-9">
+							<label>Cidade:</label>
+							 <input disabled type="text" id="cidade" th:name="*{endereco.localidade}" th:field="*{endereco.localidade}" th:valeu="*{endereco.localidade}" class="form-control form-control-user" placeholder="">
+						</div>
+
+						<div class="col-sm-3">
+							<label>UF:</label> <input disabled type="text" id="uf" th:name="*{endereco.uf}" th:field="*{endereco.uf}" th:value="*{endereco.uf}" class="form-control form-control-user" placeholder="">
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-sm-12 mb-3 mb-sm-0">
+							<label>Complemento:</label>
+
+							<input th:name="endereco.complemento"
+								th:field="*{endereco.complemento}"
+								th:value="*{endereco.complemento}"
+								class="md-textarea form-control form-control-user">
+						</div>
+					</div>
+					
+					<div class="form-group row">
+
+						<div class="col-sm-6">
+							<label>Senha:</label>
+							 <input type="password" id="senha" th:name="*{password}" th:field="*{password}" class="form-control form-control-user" placeholder="" required>
+						</div>
+						<div class="col-sm-6">
+							 <label>Confirme Senha:</label>
+							 <input type="password" id="confirmesenha" class="form-control form-control-user" placeholder="" required>
+						</div>
+					</div>
+					
+					<div class="form-control form-control-user">
+                    	<button th:if="${usuario.nome != null}" type="submit" class="btn btn-success btn-user btn-block col-sm-5">Alterar</button>
+						<button th:if="${usuario.nome == null}" type="submit" class="btn btn-success btn-user btn-block col-sm-5">Registrar</button>
+						<div class="col-sm-6">
+						</div>	
+						<a href="/home" class="btn btn-danger btn-user btn-block col-sm-5">Limpar</a>
+					</div>
+					<hr>
+				</form>
+				<hr>
+			</div>
+		</div>
+		
+		<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+		<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+		
+		<!-- Pegar cep na Api ViaCEP -->
+        <script th:src="@{/js/cepdados.js}"></script>
+        <!-- Mascara do CEP -->
+        <script th:src="@{/js/cepmascara.js}"></script>
+        <!-- Script para manipulação de imagem -->
+        <script th:src="@{/js/previaimguser.js}"></script>
+	</div>
+</body>
+</html>

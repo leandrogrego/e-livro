@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{project/layout/layout}">
+<head>
+<title>Lbook -home</title>
+</head>
+<body>
+	<div layout:fragment="corpo">
+
+		<div class="container-fluid">
+			<div class="col-ms-12 mb-5">
+				<i class=" fa-4x fas fa-cart-plus"></i><span
+					class="h4 text-gray-900 ">Carrinho</span>
+			</div>
+
+			<div class="col-sm-12 form-grounp row">
+				<div th:each="itemPedido : ${itemPedidos}" class="col-sm-12">
+					<hr class="col-sm-12">
+					<div class="col-sm1-12">
+						<div class="col-sm-4 mb-3">
+							<img class="img-responsive avatar-view" id="fotopreview"
+								th:src="@{/lbook/livro/imagem/{id}(id=${itemPedido.livro})}"
+								alt="Avatar" title="Mudar a foto"
+								style="width: 200px; height: 300px">
+							<div class="col-ms-12">
+								<a class="ml-2"
+									th:href="@{/lbook/delete/item/carrinho/{id}(id=${itemPedido.id})}"><button
+										class="btn btn-danger">
+										<i class="fas fa-cart-plus"></i> Retirar do Carrinho
+									</button> </a>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<hr class="col-ms-12">
+			<div class="col-ms-12 mb-5">
+				<a th:href="@{/lbook/fecha/carrinho}" class="h4 text-gray-500 "><i class=" fa-3x fas fa-cart-plus"></i><button class=" h4 ml-4 btn btn-success"><i class="fas fa-cart-plus"></i> Fechar Compra </button></a>
+			</div>
+
+			<!-- /.container-fluid -->
+		</div>
+	</div>
+</body>
+</html>

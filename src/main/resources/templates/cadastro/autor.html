@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+	
+<head>
+<title th:if="${autor.nome != null}">E-livro - Alterar Autor</title>
+<title th:if="${autor.nome == null}">E-livro - Cadastror Autor</title>
+</head>
+
+<body>
+	<div layout:fragment="corpo">
+		<div class="row justify-content-center">
+			<div class="col-xl-9 col-lg-9 col-md-9 card o-hidden border-0 shadow-lg my-0">
+	
+					<h1 th:if="${autor.nome != null}" class="h4 text-gray-900 mb-4">Alterar Autor</h1>
+					<h1 th:if="${autor.nome == null}" class="h4 text-gray-900 mb-4 mt-4">Cadastrar Autor</h1>
+	
+					<!-- formulario-->
+				<form class="user" method="post" th:object="${autor}" th:action="@{/autor/salvar}" enctype="multipart/form-data">
+	                <input id="id" th:name="*{id}" type="hidden" th:field="*{id}" th:value="*{id}">
+					<div class="form-group row ">
+						<div class="col-md-4">
+							<div th:if="*{foto}"  class="col-md-8">
+								<img  th:src="@{/autor/imagem/{id}(id=${autor.id})}" id="uploadPreview" class=" pb-3 img-responsive  img-thumbnail rounded mx-auto d-block" />
+							</div>
+							<div th:if="*{foto == null}"  class="col-md-8">
+								<img src="/img/user.png" id="uploadPreview" class=" pb-3 img-responsive  img-thumbnail rounded mx-auto d-block" />
+							</div>
+							<div class="col-md-1 ml-4 mr-4 mt-0">
+							    <!-- Botão que chama o input file -->
+								<label class="btn btn-success btn-circle" for='uploadImage'><i class="fas fa-folder-open" aria-hidden="true"></i></label>
+							    <input id="uploadImage" th:src="@{/autor/imagem/{id}(id=${autor.id})}"  type="file"  name="uploadfile" onchange="imgPrevia();"/>
+							    <!-- botão limpar foto -->
+								<span class="btn btn-danger btn-circle" onclick="excluir(1);"><i class="fas fa-trash" aria-hidden="true"></i></span>
+							</div>
+						</div>
+					    <div class="col-sm-7 mt-1 mb-sm-0">
+							<label>Nome:</label>
+							<input type="text" th:name="*{nome}" th:field="*{nome}" th:value="*{nome}" class="form-control form-control-user" placeholder="" required>
+							<hr>
+	                    	<button th:if="${autor.nome != null}" type="submit" class="btn btn-success btn-user btn-block col-sm-3">Alterar</button>
+							<button th:if="${autor.nome == null}" type="submit" class="btn btn-success btn-user btn-block col-sm-3">Registrar</button>
+							<span class="col-sm-2"></span>
+							<a href="/admin" class="btn btn-danger btn-user btn-block col-sm-3">Cancelar</a>							
+						</div>	
+					</div>
+					<hr>
+				</form>
+				<hr>
+			</div>
+		</div>
+
+		<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+		<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+		<!-- Pegar cep na Api ViaCEP -->
+	    <script th:src="@{/js/cepdados.js}"></script>
+	    <!-- Mascara do CEP -->
+	    <script th:src="@{/js/cepmascara.js}"></script>
+	    <!-- Script para manipulação de imagem -->
+	    <script th:src="@{/js/previaimguser.js}"></script>
+   	</div>
+</body>
+</html>

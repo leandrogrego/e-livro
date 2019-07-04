@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+<title>E-Livro - Autores</title>
+
+</head>
+
+<body>
+  <div layout:fragment="corpo">
+	<div class="row justify-content-center">
+		<div class="col-xl-11 col-lg-11 col-md-11 card o-hidden border-0 shadow-lg my-0">
+
+			<!-- Page Heading -->
+			<h1 class="h3 mb-2 text-gray-800">Autroes</h1>
+
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">Dados dos Autoress</h6>
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table table-bordered" id="dataTable" width="100%"
+							cellspacing="0">
+							<thead>
+								<tr>
+									<th>id</th>
+									<th>foto</th>
+									<th>Nome</th>
+									<th>Livros</th>
+									<th>Sinopse</th>
+									<th>Editar</th>
+									<th>Excluir</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="autor : ${autores}">
+
+									<td th:text="${autor.id}"></td>
+									<td th:if="${autor.foto}" class="col-sm-2">
+										<img class="img-responsive avatar-view" 
+											th:src="@{/autor/imagem/{id}(id=${autor.id})}" alt="Avatar"
+											title="Mudar a foto" style="width: 75px; height: 75px">
+									</td>
+									
+									<td th:if="${autor.foto == null}"  class="col-md-2">
+									   <img class="img-responsive avatar-view" id="fotopreview" 
+									   		src="/img/user.png"  
+									   		title="Mudar a foto" style="width: 75px; height: 75px">
+								   	</td>
+									
+									<td th:text="${autor.nome}"></td>
+									<td th:text="${autor.livros}"></td>
+									<td ></td>
+									<td><a class="btn btn-success btn-circle"
+										th:href="@{/autor/update/{id}(id=${autor.id})}"><i
+											class="fas fa-edit"></i></a></td>
+									<td><a class="btn btn-danger btn-circle "
+										th:href="@{/autor/delete/{id}(id=${autor.id})}"><i
+											class="fas fa-trash"></i></a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  </div>	
+</body>
+</html>
+	

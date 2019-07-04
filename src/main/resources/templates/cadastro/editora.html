@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+     <title th:if="${editora.nome != null}">E-livro - Atualizar Editora Literário</title>
+     <title th:if="${editora.nome == null}">E-livro - Cadastra Editora</title>
+</head>
+
+<body>
+	<div layout:fragment="corpo">
+	
+		<div class="row ml-4">
+			<div class="col-lg-11 ml-5 ">
+
+				<h1 th:if="${editora.nome != null}" class="h4 text-gray-900 mb-4">Atualizar Editora </h1>
+				<h1 th:if="${editora.nome == null}" class="h4 text-gray-900 mb-4">Cadastro de Editora </h1>
+				
+				<!-- formulario-->
+				<form class="user" method="post" th:object="${editora}" th:action="@{/editora/salvar}"  enctype="multipart/form-data">
+                    <input id="id" th:name="*{id}" type="hidden" th:field="*{id}" th:value="*{id}">
+					<div class="col-1 mb-3 mb-sm-0">
+						<label><i>*</i> Nome:</label>
+					</div>
+					<div class="col-sm-6 mb-3 mb-sm-0">
+						<input type="text" th:name="*{nome}" th:field="*{nome}" th:value="*{nome}" class="form-control form-control-user" placeholder="" required>
+					</div>
+					<div class="col-sm-2 mb-3 mb-sm-0">
+						<button type="submit" class="btn btn-success btn-user btn-block col-sm-12">Registrar</button>
+					</div>
+					<div class="col-sm-2 mb-3 mb-sm-0">
+						<a href="/admin" class="btn btn-danger btn-default btn-user btn-block col-sm-12 text-white">Limpar</a>
+					</div>
+					<hr class="col-sm-12 mt-5">
+				</form>
+				<hr>
+			</div>
+		</div>
+		
+		<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+		<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+		<!-- previa de imagem -->
+	    <script th:src="@{/js/uploadImgLivro.js}"></script>
+	    <!--criar campos dos autores -->
+	    <script th:src="@{/js/criarcampo.js}"></script>
+	    <script th:src="@{/js/mascara.js}"></script>
+	    <script th:src="@{/js/moedamascara.js}"></script>
+	    <script th:src="@{/js/mascarapeso.js}"></script>   
+	    
+	</div>
+</body>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+<title>E-Livro - Editoras</title>
+
+</head>
+
+<body>
+  <iv layout:fragment="corpo">
+	<iv class="row justify-content-center">
+		<iv class="col-xl-11 col-lg-11 col-md-11 card o-hidden border-0 shadow-lg my-0">
+			
+			<!-- Page Heading -->
+			<h1 class="h3 mb-2 text-gray-800">Editoras</h1>
+			
+			<iv class="card shadow mb-4">
+				<a class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary col-11">
+						Dados das Editoras
+						<a href="/editora/cadastro" class="btn btn-xs btn-success col-2 ">Adicionar Editora</a>
+					</h6>
+					
+					
+				
+					
+				</iv>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table table-bordered" id="dataTable" width="100%"
+							cellspacing="0">
+							<thead>
+								<tr>
+									<th>id</th>
+									<th>Nome</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="editora : ${editoras}">
+
+									<td th:text="${editora.id}"></td>
+									<td th:text="${editora.nome}"></td>
+									<td class="col-1"><a class="btn btn-success btn-circle"
+										th:href="@{/editora/update/{id}(id=${editora.id})}"><i
+											class="fas fa-edit"></i></a></td>
+									<td class="col-1"><a class="btn btn-danger btn-circle "
+										th:href="@{/editora/delete/{id}(id=${editora.id})}"><i
+											class="fas fa-trash"></i></a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</iv>
+		</iv>
+	</iv>
+  </iv>
+</body>
+</html>
+	

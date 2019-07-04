@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{project/layout/layout}">
+
+<head>
+<title>Livraria - Livros</title>
+
+</head>
+
+<body>
+	<div layout:fragment="corpo">
+		<!-- Begin Page Content -->
+		<div class="container-fluid">
+
+			<!-- Page Heading -->
+			<h1 class="h3 mb-2 text-gray-800">Livros</h1>
+
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">Dados dos Livros</h6>
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table table-bordered" id="dataTable" width="100%"
+							cellspacing="0">
+							<thead>
+								<tr>
+									<th>id</th>
+									<th>foto</th>
+									<th>Titulo</th>
+									<th>Autores</th>
+									<th>Categoria</th>
+									<th>Ano</th>
+									<th>ISBN</th>
+									<th>Edição</th>
+									<th>Peso</th>
+									<th>Preço</th>
+									<th>Editora</th>
+									<th>Sinopse</th>
+									<th>Editar</th>
+									<th>Excluir</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="livro : ${livros}">
+
+									<td th:text="${livro.id}"></td>
+									<td th:if="${livro.foto}">
+                                    	<img class="img-responsive avatar-view" id="fotopreview" th:src="@{/lbook/livro/imagem/{id}(id=${livro.id})}"
+														alt="Avatar" title="Mudar a foto"
+														style="width: 200px; height: 300px">
+                                    </td>
+                                    
+                                    <td th:if="${livro.foto == null}" class="col-md-2 mb-5">
+											<img src="/img/book.png" id="uploadPreview"
+												class=" pb-3 img-responsive  img-thumbnail rounded mx-auto d-block" />
+									
+									</td>
+									<td th:text="${livro.titulo}"></td>
+									<td th:text="${livro.autores}"></td>
+									<td th:text="${livro.categoria}"></td>
+									<td th:text="${livro.ano}"></td>
+									<td th:text="${{livro.isbn}}"></td>
+									<td th:text="${livro.edicao}"></td>
+									<td th:text="${livro.peso}"></td>
+									<td th:text="${livro.valor}"></td>
+									<td th:text="${livro.editora}"></td>
+									<td th:text="${livro.sinopse}"></td>
+									<td><a class="btn btn-success btn-circle"
+										th:href="@{/lbook/livro/update/{id}(id=${livro.id})}"><i
+											class="fas fa-edit"></i></a></td>
+									<td><a class="btn btn-danger btn-circle "
+										th:href="@{/lbook/livro/delete/{id}(id=${livro.id})}"><i
+											class="fas fa-trash"></i></a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+	

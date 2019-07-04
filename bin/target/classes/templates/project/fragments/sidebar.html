@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout">
+
+<!-- Sidebar lateral -->
+<ul th:fragment="menu-lateral" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+	<li>
+		<a th:href="@{/lbook/home}" class="sidebar-brand d-flex align-items-center justify-content-center">
+			<span class="sidebar-brand-icon rotate-n-15"><i class="fas fa-book-reader"></i></span>
+			<span class="sidebar-brand-text mx-3">LBOOK - HOME</span>
+		</a>
+	</li>
+	
+	
+	
+    <li>
+    <hr class="sidebar-divider">
+    </li>
+    
+	<li>
+	<span class="sidebar-heading">Gerenciar</span>
+	</li>
+
+	<li class="nav-item">
+		
+	<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+	 <i class="fas fa-copyright"></i>Cadastro
+	</a>
+	
+		<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+			<div class="bg-white py-2 collapse-inner rounded">
+			
+				<h6 class="collapse-header">Componentes:</h6>
+				<a th:href ="@{/lbook/livro/cadastro}" class="collapse-item" > Cadastro Livros</a>
+				<a th:href="@{/lbook/usuario/cadastro}" class="collapse-item" >Cadastro Usuário</a>
+			</div>
+		</div>
+	</li>
+
+	<!-- Divider -->
+	<li><hr class="sidebar-divider"></li>
+    <!-- Heading -->
+	<li><div class="sidebar-heading">Consultas</div></li>
+    	<li class="nav-item">
+		
+	<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseTwo">
+	 <i class="fas fa-registered"></i>Listas de Registros
+	</a>
+	
+		<div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+			<div class="bg-white py-2 collapse-inner rounded">
+			
+				<h6 class="collapse-header">Componentes:</h6>
+				<a th:href="@{/lbook/usuarios}" class="collapse-item" ><i class="fas fa-users"></i> Lista Usuários</a>
+				<a th:href="@{/lbook/livros}" class="collapse-item" ><i class="fas fa-book"></i> Lista Livros</a>
+			</div>
+		</div>
+	</li>
+
+	<!-- Divider -->
+	<li><hr class="sidebar-divider d-none d-md-block"></li>
+
+	<!-- Sidebar Toggler (Sidebar) -->
+	 <span class="text-center d-none d-md-inline">
+		<button class="rounded-circle border-0" id="sidebarToggle"></button>
+	</span>
+
+</ul>
+<!-- fim do Sidebar -->
+</html>

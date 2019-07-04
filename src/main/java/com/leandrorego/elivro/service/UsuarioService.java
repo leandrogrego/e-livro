@@ -5,59 +5,44 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.leandrorego.elivro.model.Usuario;
-import com.leandrorego.elivro.repository.UsuarioRepository;
-import org.springframework.data.domain.Example;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import com.leandrorego.elivro.models.Usuario;
+import com.leandrorego.elivro.repository.UserRepository;
 
 
 @Service
-public class UsuarioService implements UserDetailsService{
+public class UsuarioService {
 	
 	@Autowired
-	private UsuarioRepository repository;
-	
-	public Usuario save(Usuario usuario) {
-		return repository.saveAndFlush(usuario);
+	private UserRepository crud;
+
+	public Usuario findByusername(String username) {
+		return crud.findByusername(username);
+	}
+
+	public boolean create(Usuario usuario) {
+		crud.saveAndFlush(usuario);
+		return true;
+	}
+
+	public Usuario findById(long id) {
+		return crud.findById(id);
 	}
 
 	public List<Usuario> findAll() {
-		return repository.findAll();
+		return crud.findAll();
 	}
-	
-	public Usuario findOne(Long id) {
-		return repository.getOne(id);
-	}
-	
-	public void delete(Long id) {
-		repository.deleteById(id);
-	}
-	
-	/*
-	public Usuario findEmail(String email ) {
-		return repository.findByEmail(email);
-	}*/
-        
-            public Usuario findByEmail(String email) {
-            Usuario usuario = new Usuario();                         
-            if(email!=null){
-                usuario.setEmail(email);                          
-                Example<Usuario> example;
-                example = Example.of(usuario);
-                usuario = repository.findOne(example).get();
-            } 
-            return usuario;
-        }
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-                Usuario usuario = findByEmail(email);
-        if(usuario == null){
-            throw new UsernameNotFoundException("Usuário não Encontrado!");
-        }
-        return usuario;
-    }
+	public Usuario update(long id) {
+		return crud.getOne(id);
+	}
+	
+		
+	public boolean delete(Usuario usuario) {
+		crud.delete(usuario);
+		return true;
+	}
 
+	public long count() {
+		return crud.count();
+	}
 }

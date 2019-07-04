@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<title>E-livro</title>
+</head>
+<body>
+	<div layout:fragment="corpo">
+
+		<div class="container-fluid">
+			<div class="col-ms-12 mb-5">
+				<a class="h4 text-gray-500 " th:href="@{/lbook/carrinho}"><i class=" fa-3x fas fa-cart-plus"></i><button class=" h4 ml-4 btn btn-success"><i class="fas fa-cart-plus"></i> Fechar Carrinho </button></a>
+			</div>
+			
+			<p class="h4 text-gray-900 ">Biblioteca</p>
+
+			<div th:each="livro : ${livros}" class="col-sm-12">
+				<hr class="col-sm-12">
+
+				<div th:if="${livro.foto}" class="col-sm-4">
+					<img class="img-responsive avatar-view" id="fotopreview"
+						th:src="@{/lbook/livro/imagem/{id}(id=${livro.id})}" alt="Avatar"
+						title="Mudar a foto" style="width: 200px; height: 300px">
+				</div>
+				<div class="col-sm-12 mb-4 ">
+					<span class="h4 text-gray-900 mb-4">Categoria:</span> <span
+						class="h4 text-gray-900 mb-4" th:text="${livro.categoria}"></span>
+				</div>
+
+				<div class="col-sm-8 form-group">
+
+					<div class="col-sm-12">
+						<span class="h5 text-gray-900 mb-4" th:text="${livro.titulo}"></span>
+					</div>
+					<div class="col-sm-12">
+						<span class="h5 text-gray-900 mb-4">Autores:</span> <span
+							class="h5 text-gray-900 mb-4" th:text="${livro.autores}"></span>
+					</div>
+					<div class="col-sm-12">
+						<span class="h5 text-gray-900 mb-4">Editora:</span> <span
+							class="h5 text-gray-900 mb-4" th:text="${livro.editora}"></span>
+					</div>
+					<div class="col-sm-4">
+						<span class="h5 text-gray-900 mb-4">Edição:</span> <span
+							class="h5 text-gray-900 mb-4" th:text="${livro.edicao}"></span>
+					</div>
+
+					<div class="col-sm-4">
+						<span class="h5 text-gray-900 mb-4">ISBN:</span> <span
+							class="h5 text-gray-900 mb-4" th:text="${{livro.isbn}}"></span>
+					</div>
+
+					<div class="col-sm-4">
+						<span class="h5 text-gray-900 mb-4">Peso:</span> <span
+							class="h5 text-gray-900 mb-4" th:text="${livro.peso}"></span>
+					</div>
+
+					<div class="col-sm-12">
+						<span class="h5 text-gray-900 mb-4">Publicação:</span> <span
+							class="h5 text-gray-900 mb-4" th:text="${livro.ano}"></span>
+					</div>
+
+					<div class="col-sm-12">
+						<span class="h5 text-gray-900 mb-4">Sinopse:</span>
+						<p class="h5 text-gray-900 mb-4" th:text="${livro.sinopse}"></p>
+					</div>
+				</div>
+				<div class="col-ms-12">
+					<a th:href="@{/lbook/add/carrinho/{id}(id=${livro.id})}"><button
+							class="btn btn-success">
+							Add Carrinho<i class="fas fa-cart-plus"></i>
+						</button> </a>
+				</div>
+
+				<hr class="col-sm-12">
+			</div>
+		</div>
+		<!-- /.container-fluid -->
+	</div>
+</body>
+</html>

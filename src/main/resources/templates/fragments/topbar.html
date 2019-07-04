@@ -1,0 +1,66 @@
+<nav th:fragment="menu-top"  class="w3-card-2 topnav notranslate" id="topnav" style="position: top; top: 0px;">
+  <div style="overflow:auto;">
+    <div class="w3-bar w3-left" style="width:100%;overflow:hidden;height:50px">
+	<a th:href="@{/home}" class="sidebar-brand d-flex align-items-center justify-content-center">
+	<b>
+		<span class="sidebar-brand-icon rotate-n-15" ><i class="fas fa-book"></i></span>
+		<span class="sidebar-brand-text mx-3">E-LIVRO</span>
+	</b>
+	</a>
+	<a class="w3-bar-item w3-button" href="/autor/lista" title="AUTORES">AUTORES</a>
+	<a class="w3-bar-item w3-button" href="/editora/lista" title="EDITORAS">EDITORAS</a>
+    <a class="w3-bar-item w3-button" href="/genero/lista" title="GENEROS">GENEROS</a>
+    <a class="w3-bar-item w3-button" href="/livro/lista" title="LIVROS">LIVROS</a>
+    <!-- Informações do administrador -->
+	<span  th:if="${session.usuarioLogado != null}">
+		<a class="w3-bar-item w3-button" href="/admin" title="ADMIN">ADMIN
+		
+		</a>
+   	</span>
+
+    <!-- Menu de informações do usuário -->
+	<span  th:if="${session.usuarioLogado == null}">
+		<a class="w3-bar-item w3-button" th:href="@{/entrar}" data-toggle="tooltip" data-html="true" data-placement="top" title="Pedidos"  >
+			<i class="fas fa-user"></i>
+		Login</a>
+	</span>
+
+	<span  th:if="${session.usuarioLogado != null}">
+		<a class="text-gray-700" th:href="@{/livros/venda}"data-toggle="tooltip" data-html="true" data-placement="top" title="Pedidos"  ><i class="  fa fas fa-shopping-cart mr-0"></i><span th:if="${session.usuarioLogado.carrinho != null}" th:text="${session.usuarioLogado.carrinho.itensQuantidade}"></span></a>
+
+		<!-- Informações do usuário -->
+    	<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span th:text="${session.usuarioLogado.nome}"></span>
+			 <span class="mr-0 d-none d-lg-inline text-gray-400 small"></span>
+		 	<span  th:if="${session.usuarioLogado.foto != null}">
+		        <img width="30" class=" img-profile rounded-circle" th:src="@{/usuario/imagem/{id}(id=${session.usuarioLogado.id})}">
+	     	</span>
+	     	<span th:if="${session.usuarioLogado.foto == null}">
+	       	<img width="30" class="img-profile rounded-circle" src="/img/user.png">
+	     	</span>
+			</a>
+		 	<!-- Dropdown - Usuário informações -->
+				<div class="dropdown-menu dropdown-menu-button-dark shadow animated--grow" aria-labelledby="userDropdown">
+					<a class="dropdown-item text-gray-700" href="/usuario/perfil"> <i class="fas fa-user fa-sm fa-fw mr-0 text-green-400"></i>Perfil</a>
+					<a class="dropdown-item text-gray-700" href="#"><i class="fas fa-cogs fa-sm fa-fw mr-0 text-gray-400"></i>Lista de Desejos</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item text-gray-700" href="#" data-toggle="modal" data-target="#logoutModal"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-0 text-gray-400"></i>Sair</a>
+				</div>
+	</span>		
+	<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+	<script>
+			$('[data-toggle="tooltip"]').tooltip();
+		</script>
+		<script>
+			$(function() {
+				$('.btn-loading').on('click', function() {
+					$btn = $(this).button('loading');
+					setTimeout(function() {
+						$btn.button('reset');
+					}, 1000);
+				});
+			});
+		</script>
+	<!-- fim do menu de informações do usuário -->
+  </div>
+  </div>
+</nav>

@@ -1,72 +1,124 @@
-<!DOCTYPE html>
-<html>
-
+ <!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/layout}">
+	
 <head>
+
 <meta charset="utf-8">
-<title> Login</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="Sistema de Gerenciamento de Prestadores de Serviços">
+<meta name="author" content="Matheus Pinheiro Pereira">
+
+<!--Fonts do layout-->
+<link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+<link th:href="@{https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i}" rel="stylesheet">
+
+<!-- Icon -->
+<link th:href="@{/img/book.png}" rel="icon">
+
+<!-- Estilo do layout-->
+<link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+<link th:href="@{/css/template.css}" rel="stylesheet">
+
 </head>
 
-<body id="page-top">
-	
-		<div class="container">
-			<!-- Outer Row -->
-			<div class="row justify-content-center">
-
-				<div class="col-xl-4 col-lg-12 col-md-9">
-
-					<div class="card o-hidden border-0 shadow-lg my-5">
-						<div class="card-body p-0">
-							<!-- Nested Row within Card Body -->
-							<div class="row">
-
-								<div class="col-lg-12">
-									<div class="p-5">
-
-										<div class="text-center">
-											<div>
-												<img src="/img/favicon.png">
-											</div>
-											<h1 class="h4 text-gray-900 mb-4">Sistema de
-												Gestão Hospitalar</h1>
-												<hr>
-										</div>
-										<form class="container" method="post" th:object="${usuario}"
-											th:action="@{/usuario/login}">
-											
-											<div class="form-group">
-												<input type="text" class="form-control form-control-user"
-													th:field="*{email}"
-													id="exampleInputEmail" aria-describedby="emailHelp"
-													placeholder="Usuário">
-											</div>
-											<div class="form-group">
-												<input type="password"
-													class="form-control form-control-user"
-													th:field="*{senha}"
-													id="exampleInputPassword" placeholder="Senha">
-													
-											</div>
-											<div class="form-group">
-											
-											</div>
-											<button type="submit" class="btn btn-primary">Entrar</button>
-											<hr>
-										</form>
-										<div class="text-center"></div>
-									</div>
+<body class="background">
+<div layout:fragment="corpo">
+	<div class="row justify-content-center">
+		<div class="col-xl-8 col-lg-12 col-md-9">
+			<div class="card o-hidden border-0 shadow-lg my-0">
+				<div class="card-body p-0">
+					<div class="row">
+						<div class="col-lg-5 p-5">
+							<div class="p-0">
+								<div class="text-center">
+									<h6 class="h4 text-gray-900 mt-2 mb-5">
+										<i class="fas fa-user"></i>LOGIN
+									</h6>
 								</div>
+								<!-- Ação a ser chamada pelo security -->
+								<form class="user" method="post" action="/entrar">
+								    
+								    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+								    
+									<div class="form-group">
+										<input   name="username" class="form-control form-control-user mb-5" placeholder="Nome:">
+									</div>
+									
+									<div class="form-group">
+										<input type="password" name="password" class="form-control form-control-user mb-4"  placeholder="Senha:">
+									</div>
+
+									<div class="form-group">
+									  <div class="custom-control custom-checkbox small">
+										<input type="checkbox" id="remember-me" name="remember-me"  class="custom-control-input"/>
+										<label class="custom-control-label" for="remember-me">Lembrar?</label>
+										</div>
+									</div>
+									<button  class="btn btn-primary btn-block ">Entrar</button>
+								</form>
+								
+								<hr>
+								
+								<div class="text-center">
+									<a class="small" >Cadastre-se!</a> - 
+									<a class="small" >Esqueceu sua senha?</a>
+								</div>
+								
+							</div>
+							
+						</div>
+						<div class="col-lg-1 d-lg-block pt-5">
+							ou
+						</div>
+						<div class="col-lg-5 d-lg-block pt-5">
+							<div class="text-center"> 
+								<h6 class="h4 text-gray-900 mt-2 mb-5">
+									<i class="fas fa-user"></i>CADASTRE-SE
+								</h6>
+									<a href="/usuario/cadastro"><button class="btn btn-success btn-user btn-block">Cadastre-se</button></a>
+								<img alt="Logo Livro" src="img/book.png" class="img-responsive center-block ml-4 mt-5	">
 							</div>
 						</div>
 					</div>
-
-				</div>
-
+				</div>	
 			</div>
-
 		</div>
+	</div>
+</div>	
+
+		<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+		<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 	
-
+		<!-- Core plugin JavaScript-->
+		<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+	
+		<!-- Custom scripts for all pages-->
+		<script th:src="@{/js/sb-admin-2.min.js}"></script>
+	
+		<!-- Page level plugins -->
+		<script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+		<script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+	
+		<!-- Page level custom scripts -->
+		<script th:src="@{/js/demo/datatables-demo.js}"></script>
+	
+		<script>
+			$('[data-toggle="tooltip"]').tooltip();
+		</script>
+		<script>
+			$(function() {
+				$('.btn-loading').on('click', function() {
+					$btn = $(this).button('loading');
+					setTimeout(function() {
+						$btn.button('reset');
+					}, 1000);
+				});
+			});
+		</script>
 </body>
-
 </html>
-

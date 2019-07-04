@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+<title>E-Livro - Generos Literários</title>
+
+</head>
+
+<body>
+  <div layout:fragment="corpo">
+	<div class="row justify-content-center">
+		<div class="col-xl-11 col-lg-11 col-md-11 card o-hidden border-0 shadow-lg my-0">
+
+			<!-- Page Heading -->
+			<h1 class="h3 mb-2 text-gray-800">Generos Literários</h1>
+			<a href="/genero/cadastro" class="btn btn-sm btn-success col-sm-2">Adicionar Genero</a>
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">Dados dos Generos Literários</h6>
+			
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table table-bordered" id="dataTable" width="100%"
+							cellspacing="0">
+							<thead>
+								<tr>
+									<th>id</th>
+									<th>Nome</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="genero : ${generos}">
+
+									<td th:text="${genero.id}"></td>
+									<td th:text="${genero.nome}"></td>
+									<td class="col-1"><a class="btn btn-success btn-circle"
+										th:href="@{/genero/update/{id}(id=${genero.id})}"><i
+											class="fas fa-edit"></i></a></td>
+									<td class="col-1"><a class="btn btn-danger btn-circle "
+										th:href="@{/genero/delete/{id}(id=${genero.id})}"><i
+											class="fas fa-trash"></i></a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  </div>
+</body>
+</html>
+	
