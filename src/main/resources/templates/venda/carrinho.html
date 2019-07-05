@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<title>E-livros - Carrinho</title>
+</head>
+<body>
+	<div layout:fragment="corpo">
+		<div class="row justify-content-center">
+		<div class="col-xl-11 col-lg-11 col-md-11 card o-hidden border-0 shadow-lg my-0">
+				<i class=" fa-4x fas fa-cart-plus"> Meu Carrinho</i>
+			<div class="col-sm-12 form-grounp row">
+				<div th:each="itemPedido : ${itens}" class="col-sm-12">
+					<hr class="col-sm-12">
+					<div class="col-sm1-12">
+						<div class="col-sm-4 mb-3 d-inline-block">
+							<img class="img-responsive avatar-view" id="fotopreview"
+								th:src="@{/livro/imagem/{id}(id=${itemPedido.livro})}"
+								alt="Avatar" title="Mudar a foto"
+								style="width: 80px; height: 120px">
+						</div>
+						<div class="col-ms-3 d-inline-block"></div>
+							<h3 th:text="${itemPedido}"></h3>
+						</div>
+						<div class="col-ms-3 d-inline-block"></div>
+							<a class="ml-2 btn btn-danger"
+								th:href="@{/carrinho/del/{id}(id=${itemPedido.id})}">
+								<i class="fas fa-delete"></i> Retirar do Carrinho
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+			<hr class="col-ms-12">
+			<div class="col-ms-12 mb-5">
+				<a th:href="@{/fecha/carrinho}" class="h4 text-gray-500 "><i class=" fa-3x fas fa-cart-plus"></i><button class=" h4 ml-4 btn btn-success"><i class="fas fa-cart-plus"></i> Fechar Compra </button></a>
+			</div>
+
+			<!-- /.container-fluid -->
+		</div>
+	</div>
+</body>
+</html>

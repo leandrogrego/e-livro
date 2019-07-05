@@ -95,11 +95,9 @@ public class UsuarioController {
 		if (result.hasErrors()) {
 			return "redirect:/usuario/cadastro";
 		}
-		
 		if (!file.isEmpty()) {
 			usuario.setFoto(file.getBytes());
 		} 
-
 		usuario.setPassword (new BCryptPasswordEncoder().encode(usuario.getPassword()));
 		userCrud.create(usuario);
 		return "redirect:/home";

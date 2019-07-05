@@ -50,7 +50,7 @@
 									<td th:text="${livro.id}"></td>
 									<td th:if="${livro.foto}" class="col-md-2 mb-5">
 										<img id="fotopreview" 
-												src="@{/livro/imagem/{id}(id=${livro.id})}"
+												th:src="@{/livro/imagem/{id}(id=${livro.id})}"
 												alt="Avatar" title="Mudar a foto"
 												class=" pb-3 img-responsive  img-thumbnail rounded mx-auto d-block" />
                                     </td>
@@ -59,7 +59,6 @@
 										<img id="fotopreview" 
 												src="/img/book.png"
 												class=" pb-3 img-responsive  img-thumbnail rounded mx-auto d-block" />
-									
 									</td>
 									<td th:text="${livro.titulo}"></td>
 									<td th:text="${livro.autores}"></td>

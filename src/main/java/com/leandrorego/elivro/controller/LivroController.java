@@ -100,8 +100,15 @@ public class LivroController {
 	public ModelAndView update(@PathVariable("id") long id) {
 		ModelAndView mv = new ModelAndView("cadastro/livro");
 		Livro livro = crud.update(id);
+		List<Autor> autores = crudAutor.findAll();
+		List<Editora> editoras = crudEditora.findAll();
+		List<Genero> generos = crudGenero.findAll();
+		
 		System.out.println("Passou");
 		mv.addObject("livro",livro);
+		mv.addObject("autores", autores);
+		mv.addObject("editoras",editoras);
+		mv.addObject("generos", generos);
 		return mv;
 	}
 	

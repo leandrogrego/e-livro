@@ -24,27 +24,7 @@
 
 					<input id="id" th:name="*{id}" type="hidden" th:field="*{id}" th:value="*{id}">
 					
-					<!-- Div para adiconar novos campos ou atualizar -->
-					<div class="input_fields_wrap">
-						<div th:each="autor,indice : *{autores}" class="form-group row">
-						
-						    <input id="id" th:name="|autores[${indice.index}].id|" type="hidden" th:value="${autor.id}">
-							
-							<div class="col-sm-11">
-								<label >Autor:</label>
-								<span th:text="|autores[${indice.index}].nome|">
-								</span>
-							</div>
-							
-							<a class="col-sm-1 mt-4 remove_field  " >
-								<button onclick="excluirdado(1)" class=" btn btn-danger btn-circle">
-									<i class="fas fa-user-minus"></i>
-								</button>
-							</a>
-						</div>
-					</div>
-					
-                    <label  class="h4 text-gray-900 mb-4 pl-0 ml-0" >Livro:</label>
+					<label  class="h4 text-gray-900 mb-4 pl-0 ml-0" >Livro:</label>
                     
                      <input id="id" th:name="*{id}" type="hidden" th:field="*{id}" th:value="*{id}">
                     
@@ -98,7 +78,10 @@
 							<select class="form-control form-control-user"
 							name="*{genero}">
 								<option th:each="genero : ${generos}"
-								th:value="${genero.id}" th:text="${genero.nome}"></option>
+								th:value="${genero.id}" th:text="${genero.nome}"
+								
+								></option>
+								
 							</select>
 						</div>
 
@@ -131,8 +114,7 @@
 						</div>
 						
 						<div class="col-sm-6 mb-3 mb-sm-0">
-							<label>Editora:</label>
-														<label><i>*</i> Genero:</label>
+							<label><i>*</i> Editora:</label>
 							<select class="md-textarea form-control form-control-user"
 							name="*{gnero.nome}">
 								<option th:each="editora : ${editoras}"

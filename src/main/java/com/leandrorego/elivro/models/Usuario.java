@@ -42,7 +42,7 @@ public class Usuario extends Pessoa implements UserDetails {
 	 * Um usuário para muitos pedidos
 	 */
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Pedido> pedidos;
+	private List<Carrinho> pedidos;
 
 	/**
 	 * Um usuário para um carrinho
@@ -75,7 +75,7 @@ public class Usuario extends Pessoa implements UserDetails {
 	@Size(min = 6, message = "Password deve ser no mínimo 6 caracter.")
 	private String password;
 
-	public Usuario(String nome, Endereco endereco, List<Pedido> pedidos,
+	public Usuario(String nome, Endereco endereco, List<Carrinho> pedidos,
 			Carrinho carrinho, List<Role> roles, Status status, byte[] foto,
 			String username, String password) {
 
@@ -102,11 +102,11 @@ public class Usuario extends Pessoa implements UserDetails {
 		this.endereco = endereco;
 	}
 
-	public List<Pedido> getPedidos() {
+	public List<Carrinho> getPedidos() {
 		return pedidos;
 	}
 
-	public void setPedidos(List<Pedido> pedidos) {
+	public void setPedidos(List<Carrinho> pedidos) {
 		this.pedidos = pedidos;
 	}
 

@@ -52,13 +52,31 @@ public class Livro implements Serializable {
 	private int edicao;
 	private String peso;
 	private String ano;
-	private String valor;
+	private double valor;
+	
+	public Livro(String titulo, Genero genero, List<Autor> autores,
+			Editora editora, String peso, byte[] foto,
+			String ano, double valor) {
+
+		this.setTitulo(titulo);
+		if(foto!=null) this.foto = foto;
+		this.genero = genero;
+		this.autores = autores;
+		this.editora = editora;
+		this.peso = peso;
+		this.ano = ano;
+		this.valor = valor;
+	}
+	
+	public Livro() {
+
+	}
 
 	public long getId() {
 		return id;
 	}
 
-	public String getValor() {
+	public double getValor() {
 		return valor;
 	}
 
@@ -122,7 +140,7 @@ public class Livro implements Serializable {
 		this.peso = peso;
 	}
 
-	public void setValor(String valor) {
+	public void setValor(double valor) {
 		this.valor = valor;
 	}
 

@@ -14,12 +14,6 @@ public class ItemPedido implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	/**
-	* Para uso do banco no Hiroku 
-	* @GeneratedValue(generator ="increment")
-	* @GenericGenerator(name="increment",strategy ="increment")
-	*/
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
@@ -27,7 +21,7 @@ public class ItemPedido implements Serializable {
 	private int quantidade;
 	private double valorTotal;
 	
-	//um item pedido para um livro
+	//um item pedido para cada livro
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private Livro livro;
@@ -35,7 +29,7 @@ public class ItemPedido implements Serializable {
 	public Livro getLivro() {
 		return livro;
 	}
-
+	
 	public void setLivro(Livro livro) {
 		this.livro = livro;
 	}
@@ -54,6 +48,7 @@ public class ItemPedido implements Serializable {
 
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
+		this.valorTotal = this.livro.getValor() * this.quantidade;
 	}
 
 	public double getValorTotal() {

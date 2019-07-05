@@ -26,24 +26,23 @@
 						<table class="table table-bordered" id="dataTable" width="100%"
 							cellspacing="0">
 							<thead>
-								<th>
-									<th class="col-3" >Foto</th>
-									<th class="col-5" >Detalhes do Livro</th>
-									<th class="col-2" >Ações</th>
-								</th>
+									<th >Foto</th>
+									<th >Detalhes do Livro</th>
 							</thead>
 								<tbody>
-								<tr th:each="livro : ${livros}" >
-									<td>
-										<img th:if="${livro.foto}" id="fotopreview" th:src="@{/livro/imagem/{id}(id=${livro.id})}"
-												class="img-responsive img-thumbnail avatar-view rounded col-md-10 mb-5" />
+								<tr th:each="livro : ${livros}">
+									<td th:if="${livro.foto}" class="col-ms-2" width="15%">
+										<img id="fotopreview" 
+												th:src="@{/livro/imagem/{id}(id=${livro.id})}"
+												alt="Avatar" title="Mudar a foto"
+												class="col-11"  />
+                                    </td>
+                                    <td th:if="${livro.foto == null}" class="col-ms-2" width="15%">
+										<img id="fotopreview" 
+												src="/img/book.png"
+												class="col-11" />
 									</td>
-                                    <td >
-										<img th:if="${livro.foto == null}" src="/img/book.png" id="uploadPreview"
-												
-												class="img-responsive img-thumbnail avatar-view rounded col-md-10 mb-5" />
-									</td>
-									<td class="col-md-6">
+									<td class="col-ms-6" width="55%">
 										<h2 th:text="${livro.titulo}"></h2> 
 										Autores: 
 										<span th:each="autor : ${livro.autores}" 
@@ -57,14 +56,14 @@
 										Preços: <span th:text="${livro.valor}"></span> <br> 
 										Editora: <span th:text="${livro.editora}"></span> <br>
 										Sonópse: <br><Span th:text="${livro.sinopse}"></span>
-									</td>
-									<td class="col-md-3">
-										<a class="btn btn-success mx-2 nt-3"
-										th:href="@{/carrinho/add/{id}(id=${livro.id})}"><i
-											class="fas fa-edit">Comprar</i></a>
-										<a class="btn btn-danger mx-2 mt-3"
-										th:href="@{/carrinho/add/{id}(id=${livro.id})}"><i
-											class="fas fa-trash">Lista de Desejos</i></a></td>
+										<hr />
+										<a class="btn btn-success inline-block mx-2 nt-3"
+										th:href="@{/carrinho/add/{id}(id=${livro.id})}">
+										Comprar</a> 
+										<br />
+										<a class="btn btn-danger inline-block mx-2 mt-3"
+										th:href="@{/carrinho/add/{id}(id=${livro.id})}">
+										Lista de Desejos</a></td>
 								</tr>
 							</tbody>
 						</table>

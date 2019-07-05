@@ -1,42 +1,69 @@
 package com.leandrorego.elivro.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
-/**
- * @author Matheus Pinheiro
- * Classe responsavel por habilita um carrinho de compras
- * para o usuário comprar os livros que deseja.
- */
 
 @Entity
 public class Carrinho implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Para usar o banco no Heroku
-	 * @GeneratedValue(generator ="increment")
-	 * @GenericGenerator(name="increment",strategy ="increment")
-	 * */
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
 	//um carrinho para um pedido
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	private Pedido pedido;
-	
 	private int quantItens;
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<ItemPedido> itemPedidos;
+	
+	private String data;
+	private double valortotal;
+	
+	@Enumerated(EnumType.STRING)
+	private Status status;
+	
+	
+	public void add(ItemPedido itemPedido) {
+		this.itemPedidos.add(itemPedido);
+		this.quantItens += itemPedido.getQuantidade();
+		this.valortotal += itemPedido.getValorTotal();
+	}
+	
+	public void remove(ItemPedido itemPedido) {
+		this.quantItens -= itemPedido.getQuantidade();
+		this.valortotal -= itemPedido.getValorTotal();
+		this.itemPedidos.remove(itemPedido);
+	}
+	
+	public void remove(Long id) {
+		ItemPedido itemPedido = null;
+		
+		for(int i = 0; i< itemPedidos.size(); i++) {
+			if(itemPedidos.get(i).getId() == id) {
+				itemPedido = itemPedidos.get(i);
+			}
+			if(itemPedido!=null) {
+				remove(itemPedido);
+				this.quantItens -= itemPedido.getQuantidade();
+				this.valortotal -= itemPedido.getValorTotal();
+			}
+			itemPedido = null;
+		}
+	}
+   
 	public long getId() {
 		return id;
 	}
@@ -50,10 +77,10 @@ public class Carrinho implements Serializable {
 	public void setQuantItens(int quantItens) {
 		this.quantItens = quantItens;
 	}
-	public Pedido getPedido() {
-		return pedido;
+	
+	public List<ItemPedido> getItens(){
+		return this.itemPedidos;
 	}
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
-	}
+	
+	
 }
